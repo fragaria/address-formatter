@@ -10,9 +10,10 @@
     "test": "rimraf coverage && jest --coverage",
     "test-watch": "jest --watch",
     "coverage": "cat coverage/lcov.info | coveralls",
-    "clean": "rimraf dist",
-    "build": "rollup -c rollup.config.js",
-    "pull-submodules": "git submodule init && git submodule update"
+    "clean": "rimraf dist && rimraf src/templates/*.json",
+    "prepare-templates": "node management/prepare-templates.js",
+    "pull-submodules": "git submodule init && git submodule update",
+    "build": "rollup -c rollup.config.js"
   },
   "publishConfig": {
     "access": "public"
@@ -50,6 +51,7 @@
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.1.0",
+    "js-yaml": "^3.12.1",
     "rimraf": "^2.6.2",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
