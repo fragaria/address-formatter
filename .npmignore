@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+.node-xmlhttprequest-sync-[0-9]*
+coverage
+coverage.json
+package-lock.json
+scripts
+test
+test-build
+docs
+.eslintrc.js
+.travis.yml
+.babelrc
+.github
+.nyc_output
+.nvmrc
