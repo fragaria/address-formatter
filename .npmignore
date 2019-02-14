@@ -14,3 +14,6 @@ docs
 .github
 .nyc_output
 .nvmrc
+address-formatting
+.gitignore
+.gitmodules
