@@ -1,0 +1,3 @@
+[submodule "address-formatting"]
+	path = address-formatting
+	url = git@github.com:OpenCageData/address-formatting.git
