@@ -1,5 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import json from 'rollup-plugin-json';
+
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
@@ -13,6 +15,7 @@ export default [
       sourcemap: true
     },
     plugins: [
+      json(),
       resolve(),
       commonjs(),
       terser(),
@@ -25,6 +28,7 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     plugins: [
+      json(),
       resolve(),
       commonjs(),
     ],

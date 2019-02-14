@@ -11,8 +11,8 @@
     "test-watch": "jest --watch",
     "coverage": "cat coverage/lcov.info | coveralls",
     "clean": "rimraf dist && rimraf src/templates/*.json",
-    "prepare-templates": "node management/prepare-templates.js",
     "pull-submodules": "git submodule init && git submodule update",
+    "prepare-templates": "node management/prepare-templates.js",
     "build": "rollup -c rollup.config.js"
   },
   "publishConfig": {
@@ -55,6 +55,7 @@
     "rimraf": "^2.6.2",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-terser": "^4.0.4"
   },
