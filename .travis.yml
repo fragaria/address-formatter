@@ -14,6 +14,7 @@ jobs:
     script:
     - set -e
     - npm run pull-submodules
+    - npm run prepare-templates
     - npm run lint
     - npm run test
     - npm run coverage
