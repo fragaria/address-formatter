@@ -49,18 +49,18 @@ const applyAliases = (input) => {
 
 const getStateCode = (state, countryCode) => {
   if (!stateCodes[countryCode]) {
-    return '';
+    return;
   }
   const found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
-  return (found && found.key) || '';
+  return found && found.key;
 };
 
 const getCountyCode = (county, countryCode) => {
   if (!countyCodes[countryCode]) {
-    return '';
+    return;
   }
   const found = countyCodes[countryCode].find((e) => e.name.toUpperCase() === county.toUpperCase());
-  return (found && found.key) || '';
+  return found && found.key;
 };
 
 const cleanupInput = (input, replacements) => {
@@ -73,10 +73,14 @@ const cleanupInput = (input, replacements) => {
   if (replacements) {
     for (let i = 0; i < inputKeys.length; i++) {
       for (let j = 0; j < replacements.length; j++) {
-        if (false) {
-          // todo
-        } else if (input[inputKeys[i]] && input[inputKeys[i]].replace) {
-          input[inputKeys[i]] = input[inputKeys[i]].replace(new RegExp(replacements[j][0]), replacements[j][1]);
+        const componentRegex = new RegExp(`^${inputKeys[i]}=`);
+        if (replacements[j][0].match(componentRegex)) {
+          const val = replacements[j][0].replace(componentRegex, '');
+          if (input[inputKeys[i]] === val) {
+            input[inputKeys[i]] = replacements[j][1];
+          }
+        } else {
+          input[inputKeys[i]] = `${input[inputKeys[i]]}`.replace(new RegExp(replacements[j][0]), replacements[j][1]);
         }
       }
     }
@@ -98,6 +102,29 @@ const cleanupInput = (input, replacements) => {
   if (unknownComponents.length) {
     input.attention = unknownComponents.map((c) => input[c]).join(', ');
   }
+
+  if (input.postcode) {
+    // convert to string
+    input.postcode = `${input.postcode}`;
+    const multiCodeRegex = /^(\d{5}),\d{5}/;
+    const multiCodeMatch = multiCodeRegex.exec(input.postcode);
+    if (input.postcode.length > 20) {
+      delete input.postcode;
+    // OSM may use postcode ranges
+    } else if (input.postcode.match(/\d+;\d+/)) {
+      delete input.postcode;
+    } else if (multiCodeMatch) {
+      input.postcode = multiCodeMatch[1];
+    }
+  }
+  
+  // naive url cleanup
+  for (let i = 0; i < inputKeys.length; i++) {
+    if (`${inputKeys[i]}`.match(/^https?:\/\//i)) {
+      delete input[inputKeys[i]];
+    }
+  }
+
   return input;
 };
 
@@ -106,11 +133,17 @@ const findTemplate = (input) => {
 };
 
 const chooseTemplateText = (template, input) => {
-  // TODO fallback_template if we cannot use address_template due to missing data
-  if (template.address_template) {
-    return template.address_template;
+  let selected = template.address_template;
+  const threshold = 2;
+  // Choose fallback only when none of these is present
+  const required = ['road', 'postcode'];
+  if (required
+    .map((r) => !!input[r])
+    .filter((s) => !s)
+    .length === threshold) {
+    selected = template.fallback_template || templates.default.falback_template || '';
   }
-  return template.fallback_template;
+  return selected;
 };
 
 // TODO unit test properly
@@ -176,10 +209,8 @@ const renderTemplate = (template, input) => {
 module.exports = {
   format: (input, options = {}) => {
     let realInput = Object.assign({}, input);
-    // TODO detect fallback/normalize countries from templates
     realInput = determineCountryCode(realInput);
     realInput = applyAliases(realInput);
-    // TODO sanitize - multi post-codes, drop urls
     const template = findTemplate(realInput);
     realInput = cleanupInput(realInput, template.replace);
     return renderTemplate(template, realInput);
