@@ -34,16 +34,13 @@ try {
   convert('countries/worldwide.yaml', 'templates.json', (s) => s);
   convert('components.yaml', 'aliases.json', (s) => {
     return s.reduce((agg, curr) => {
-      if (!curr.aliases) {
-        return agg;
-      }
-      const aliases = curr.aliases.map((c) => {
+      const aliases = curr.aliases ? curr.aliases.map((c) => {
         return {
           alias: c,
           name: curr.name,
         }
-      }, []);
-      return agg.concat(aliases);
+      }, []) : [];
+      return agg.concat(aliases).concat({alias: curr.name, name: curr.name});
     }, [])
   }, true);
   convert('country2lang.yaml', 'country-to-lang.json', (s) => s);
