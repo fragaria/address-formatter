@@ -133,17 +133,18 @@ const findTemplate = (input) => {
 };
 
 const chooseTemplateText = (template, input) => {
-  let selected = template.address_template;
+  let selected = template.address_template || templates.default.address_template;
   const threshold = 2;
   // Choose fallback only when none of these is present
   const required = ['road', 'postcode'];
-  if (required
+  const missingValuesCnt = required
     .map((r) => !!input[r])
     .filter((s) => !s)
-    .length === threshold) {
-    selected = template.fallback_template || templates.default.falback_template || '';
+    .length;
+  if (missingValuesCnt === threshold) {
+    selected = template.fallback_template || templates.default.fallback_template || '';
   }
-  return selected;
+  return selected || template.address_template;
 };
 
 // TODO unit test properly
@@ -180,7 +181,7 @@ const cleanupRender = (text) => {
       return dedupe(s.split(', '), ', ');
     });
   }
-  return text.trim() + '\n';
+  return text.trim();
 };
 
 // TODO unit test properly
@@ -196,6 +197,7 @@ const renderTemplate = (template, input) => {
       };
     },
   });
+
   let render = cleanupRender(Mustache.render(templateText, templateInput));
   if (template.postformat_replace) {
     for (let i = 0; i < template.postformat_replace.length; i++) {
@@ -203,7 +205,15 @@ const renderTemplate = (template, input) => {
       render = render.replace(new RegExp(replacement[0]), replacement[1]);
     }
   }
-  return cleanupRender(render);
+  render = cleanupRender(render);
+  if (!render.match(/\w/u)) {
+    render = cleanupRender(Object.keys(input)
+      .map((i) => input[i])
+      .filter((s) => !!s)
+      .join(', '));
+  }
+
+  return render + '\n';
 };
 
 module.exports = {
