@@ -32,17 +32,19 @@ function converAbbreviations(src, dest) {
 
 try {
   convert('countries/worldwide.yaml', 'templates.json', (s) => s);
-  convert('components.yaml', 'components.json', (s) => {
+  convert('components.yaml', 'aliases.json', (s) => {
     return s.reduce((agg, curr) => {
       if (!curr.aliases) {
         return agg;
       }
-      return Object.assign({}, agg, curr.aliases.reduce((a, c) => {
-        return Object.assign({}, a, {
-          [c]: curr.name
-        });
-      }, {}));
-    }, {})
+      const aliases = curr.aliases.map((c) => {
+        return {
+          alias: c,
+          name: curr.name,
+        }
+      }, []);
+      return agg.concat(aliases);
+    }, [])
   }, true);
   convert('country2lang.yaml', 'country-to-lang.json', (s) => s);
   convert('county_codes.yaml', 'county-codes.json', (s) => s);

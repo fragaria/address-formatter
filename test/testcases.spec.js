@@ -19,6 +19,9 @@ describe('testcases', () => {
     describe(`/${suite}`, () => {
       fs.readdirSync(path.resolve(SRC_PATH, suite)).map((filename) => {
         describe(filename, () => {
+          /* if (filename !== 'fr.yaml') {
+            return;
+          } */
           loadYaml(`${suite}/${filename}`).map((testCase) => {
             it(testCase.description || 'non-specific test case', () => {
               expect(addressFormatter.format(testCase.components)).toBe(testCase.expected);

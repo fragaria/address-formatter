@@ -29,7 +29,9 @@
   ],
   "author": "Jirka Chadima <chadima.jiri@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "mustache": "^3.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.5",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
