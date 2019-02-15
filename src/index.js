@@ -10,7 +10,7 @@ const VALID_REPLACEMENT_COMPONENTS = ['state'];
 
 const determineCountryCode = (input) => {
   let countryCode = input.country_code && input.country_code.toUpperCase();
-  if (!countryCode || countryCode.length !== 2 || !templates[countryCode]) {
+  if (!countryCode || countryCode.length !== 2) {
     // TODO change this to exceptions
     return input;
   }
@@ -246,7 +246,7 @@ const renderTemplate = (template, input) => {
     }
   }
   render = cleanupRender(render);
-  if (!render.match(/\w/u)) {
+  if (!render.trim().length) {
     render = cleanupRender(Object.keys(input)
       .map((i) => input[i])
       .filter((s) => !!s)
