@@ -44,8 +44,28 @@ try {
     }, [])
   }, true);
   convert('country2lang.yaml', 'country-to-lang.json', (s) => s);
-  convert('county_codes.yaml', 'county-codes.json', (s) => s);
-  convert('state_codes.yaml', 'state-codes.json', (s) => s);
+  convert('county_codes.yaml', 'county-codes.json', (s) => {
+    return Object.keys(s).reduce((agg, curr) => {
+      agg[curr] = Object.keys(s[curr]).map((k) => {
+        return {
+          name: s[curr][k],
+          key: k,
+        }
+      });
+      return agg;
+    }, {});
+  });
+  convert('state_codes.yaml', 'state-codes.json', (s) => {
+    return Object.keys(s).reduce((agg, curr) => {
+      agg[curr] = Object.keys(s[curr]).map((k) => {
+        return {
+          name: s[curr][k],
+          key: k,
+        }
+      });
+      return agg;
+    }, {});
+  });
   converAbbreviations('abbreviations/', 'abbreviations.json');
 } catch (e) {
   console.error(e);

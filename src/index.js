@@ -2,18 +2,35 @@ const Mustache = require('mustache');
 
 const templates = require('./templates/templates');
 const aliases = require('./templates/aliases');
+const stateCodes = require('./templates/state-codes');
+const countyCodes = require('./templates/county-codes');
 
 const knownComponents = aliases.map((a) => a.alias);
+const VALID_REPLACEMENT_COMPONENTS = ['state'];
 
 const determineCountryCode = (input) => {
-  let countryCode = input.country_code.toUpperCase();
-  if (countryCode.length !== 2) {
+  let countryCode = input.country_code && input.country_code.toUpperCase();
+  if (!countryCode || countryCode.length !== 2 || !templates[countryCode]) {
+    // TODO change this to exceptions
     return input;
   }
   if (countryCode === 'UK') {
     countryCode = 'GB';
   }
-  // TODO add fallback
+  if (templates[countryCode].use_country) {
+    const oldCountryCode = countryCode;
+    countryCode = templates[countryCode].use_country.toUpperCase();
+    if (templates[oldCountryCode].change_country) {
+      let newCountry = templates[oldCountryCode].change_country;
+      input.country = newCountry;
+    }
+    if (templates[oldCountryCode].add_component && templates[oldCountryCode].add_component.indexOf('=') > -1) {
+      const splitted = templates[oldCountryCode].add_component.split('=');
+      if (VALID_REPLACEMENT_COMPONENTS.indexOf(splitted[0]) > -1) {
+        input[splitted[0]] = splitted[1];
+      }
+    }
+  }
   // TODO handle NL
   // eslint-disable-next-line camelcase
   input.country_code = countryCode;
@@ -28,6 +45,22 @@ const applyAliases = (input) => {
     }
   }
   return input;
+};
+
+const getStateCode = (state, countryCode) => {
+  if (!stateCodes[countryCode]) {
+    return '';
+  }
+  const found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
+  return (found && found.key) || '';
+};
+
+const getCountyCode = (county, countryCode) => {
+  if (!countyCodes[countryCode]) {
+    return '';
+  }
+  const found = countyCodes[countryCode].find((e) => e.name.toUpperCase() === county.toUpperCase());
+  return (found && found.key) || '';
 };
 
 const cleanupInput = (input, replacements) => {
@@ -48,8 +81,14 @@ const cleanupInput = (input, replacements) => {
       }
     }
   }
-  // TODO add state code
-  // TODO add county code
+  if (!input.state_code && input.state) {
+    // eslint-disable-next-line camelcase
+    input.state_code = getStateCode(input.state, input.country_code);
+  }
+  if (!input.county_code && input.county) {
+    // eslint-disable-next-line camelcase
+    input.county_code = getCountyCode(input.county, input.country_code);
+  }
   const unknownComponents = [];
   for (let i = 0; i < inputKeys.length; i++) {
     if (knownComponents.indexOf(inputKeys[i]) === -1) {
