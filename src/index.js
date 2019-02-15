@@ -22,6 +22,15 @@ const determineCountryCode = (input) => {
     countryCode = templates[countryCode].use_country.toUpperCase();
     if (templates[oldCountryCode].change_country) {
       let newCountry = templates[oldCountryCode].change_country;
+      const componentRegex = /\$(\w*)/;
+      const componentMatch = componentRegex.exec(newCountry);
+      if (componentMatch) {
+        if (input[componentMatch[1]]) {
+          newCountry = newCountry.replace(new RegExp(`\\$${componentMatch[1]}`), input[componentMatch[1]]);
+        } else {
+          newCountry = newCountry.replace(new RegExp(`\\$${componentMatch[1]}`), '');
+        }
+      }
       input.country = newCountry;
     }
     if (templates[oldCountryCode].add_component && templates[oldCountryCode].add_component.indexOf('=') > -1) {
@@ -31,7 +40,20 @@ const determineCountryCode = (input) => {
       }
     }
   }
-  // TODO handle NL
+  
+  if (countryCode === 'NL' && input.state) {
+    if (input.state === 'Curaçao') {
+      countryCode = 'CW';
+      input.country = 'Curaçao';
+    } else if (input.state.match(/sint maarten/i)) {
+      countryCode = 'SX';
+      input.country = 'Sint Maarten';
+    } else if (input.state.match(/aruba/i)) {
+      countryCode = 'AW';
+      input.country = 'Aruba';
+    }
+  }
+
   // eslint-disable-next-line camelcase
   input.country_code = countryCode;
   return input;
@@ -51,7 +73,18 @@ const getStateCode = (state, countryCode) => {
   if (!stateCodes[countryCode]) {
     return;
   }
-  const found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
+  let found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
+
+  // TODO what if state is actually the stateCode?
+  // https://github.com/OpenCageData/perl-Geo-Address-Formatter/blob/master/lib/Geo/Address/Formatter.pm#L526
+
+  if (!found && countryCode === 'US') {
+    if (state.match(/^united states/i)) {
+      const stateName = state.replace(/^united states/i, 'US');
+      found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === stateName.toUpperCase());
+    }
+  }
+
   return found && found.key;
 };
 
@@ -65,7 +98,7 @@ const getCountyCode = (county, countryCode) => {
 
 const cleanupInput = (input, replacements) => {
   // If the country is a number, use the state as country
-  const inputKeys = Object.keys(input);
+  let inputKeys = Object.keys(input);
   if (input.country && input.state && Number.isInteger(input.country)) {
     input.country = input.state;
     delete input.state;
@@ -88,6 +121,12 @@ const cleanupInput = (input, replacements) => {
   if (!input.state_code && input.state) {
     // eslint-disable-next-line camelcase
     input.state_code = getStateCode(input.state, input.country_code);
+    if (input.state.match(/^washington,? d\.?c\.?/i)) {
+      // eslint-disable-next-line camelcase
+      input.state_code = 'DC';
+      input.state = 'District of Columbia';
+      input.city = 'Washington';
+    }
   }
   if (!input.county_code && input.county) {
     // eslint-disable-next-line camelcase
@@ -118,9 +157,10 @@ const cleanupInput = (input, replacements) => {
     }
   }
   
-  // naive url cleanup
+  // naive url cleanup, keys might have changed along the cleanup
+  inputKeys = Object.keys(input);
   for (let i = 0; i < inputKeys.length; i++) {
-    if (`${inputKeys[i]}`.match(/^https?:\/\//i)) {
+    if (`${input[inputKeys[i]]}`.match(/^https?:\/\//i)) {
       delete input[inputKeys[i]];
     }
   }
