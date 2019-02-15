@@ -113,6 +113,7 @@ const cleanupRender = (text) => {
 
 // TODO unit test properly
 const renderTemplate = (template, input) => {
+  const templateText = chooseTemplateText(template, input);
   const templateInput = Object.assign({}, input, {
     'first': () => {
       return (text, render) => {
@@ -123,7 +124,13 @@ const renderTemplate = (template, input) => {
       };
     },
   });
-  const render = Mustache.render(template, templateInput);
+  let render = cleanupRender(Mustache.render(templateText, templateInput));
+  if (template.postformat_replace) {
+    for (let i = 0; i < template.postformat_replace.length; i++) {
+      const replacement = template.postformat_replace[i];
+      render = render.replace(new RegExp(replacement[0]), replacement[1]);
+    }
+  }
   return cleanupRender(render);
 };
 
@@ -136,6 +143,6 @@ module.exports = {
     // TODO sanitize - multi post-codes, drop urls
     const template = findTemplate(realInput);
     realInput = cleanupInput(realInput, template.replace);
-    return renderTemplate(chooseTemplateText(template, realInput), realInput);
+    return renderTemplate(template, realInput);
   },
 };
