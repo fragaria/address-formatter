@@ -6,12 +6,12 @@
   "browser": "dist/umd/address-formatter.js",
   "module": "dist/es/address-formatter.js",
   "scripts": {
+    "install": "napa",
     "lint": "eslint src test",
     "test": "rimraf coverage && jest --coverage",
     "test-watch": "jest --watch --coverage",
     "coverage": "cat coverage/lcov.info | coveralls",
     "clean": "rimraf dist && rimraf src/templates/*.json",
-    "pull-submodules": "git submodule init && git submodule update",
     "prepare-templates": "node management/prepare-templates.js",
     "build": "rollup -c rollup.config.js"
   },
@@ -31,6 +31,9 @@
   "license": "MIT",
   "dependencies": {
     "mustache": "^3.0.1"
+  },
+  "napa": {
+    "address-formatting": "OpenCageData/address-formatting#6cb0327376a7288079e9dbdc6326b29428315353"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -54,6 +57,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.1.0",
     "js-yaml": "^3.12.1",
+    "napa": "^3.0.0",
     "rimraf": "^2.6.2",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",

@@ -2,7 +2,7 @@ const path = require('path'),
   fs = require('fs'),
   yaml = require('js-yaml');
 
-const SRC_PATH = path.resolve(__dirname, '../address-formatting/conf/'),
+const SRC_PATH = path.resolve(__dirname, '../node_modules/address-formatting/conf/'),
   TARGET_PATH = path.resolve(__dirname, '../src/templates/');
 
 if (!fs.existsSync(SRC_PATH)) {

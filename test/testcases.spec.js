@@ -3,7 +3,7 @@ const path = require('path'),
   yaml = require('js-yaml'),
   addressFormatter = require('../src/index');
 
-const SRC_PATH = path.resolve(__dirname, '../address-formatting/testcases/');
+const SRC_PATH = path.resolve(__dirname, '../node_modules/address-formatting/testcases/');
 
 if (!fs.existsSync(SRC_PATH)) {
   console.error('address-formatting data not found. Maybe the submodule is not initalized?');
