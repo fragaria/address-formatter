@@ -64,7 +64,7 @@ describe('address-formatter', () => {
         country_code: 'MH',
       });
       expect(converted).toHaveProperty('country_code', 'US');
-      expect(converted).toHaveProperty('state', 'Marsall Islands'); // sic
+      expect(converted).toHaveProperty('state', 'Marshall Islands'); // sic
     });
     it('should convert Sint Maarten to SX country code', () => {
       const converted = addressFormatter._determineCountryCode({
