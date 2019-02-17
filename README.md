@@ -8,13 +8,89 @@ Based on an amazing work of [OpenCage Data](https://github.com/OpenCageData/addr
 who collected so many international formats of postal addresses, this is a Javascript implementation
 of that formatter.
 
-## Installation
+This library can format almost anything that comes out of
+Open Street Maps' [Nominatim API](https://wiki.openstreetmap.org/wiki/Nominatim)
+in `address` field. Other compatible sources of data 
+such as [Photon](https://photon.komoot.de/) might be used as well.
 
-TBD
+It can automatically detect the country's
+formatting customs, but allows you to *pick a specific country
+format*. Furthermore, it allows you to abbreviate the common names,
+such as `Avenue` or `Road`.
 
-## Usage
+The formatting specification for the whole world is part of
+the distribution package, there is currently no plan to prepare
+smaller builds with limited area coverage.
 
-TBD
+## Installation & Usage
+
+### Node
+
+```sh
+npm i @fragaria/address-formatter
+```
+
+```js
+const addressFormatter = require('@fragaria/address-formatter');
+const formatted = addressFormatter.format({
+  "house_number": 301,
+  "road": "Hamilton Avenue",
+  "neighbourhood": "Crescent Park",
+  "city": "Palo Alto",
+  "postcode": 94303,
+  "county": "Santa Clara County",
+  "state": "California",
+  "country": "United States of America",
+  "country_code": "US",
+});
+const abbreviatedUkFormat = addressFormatter.format({
+  "house_number": 301,
+  "road": "Hamilton Avenue",
+  "neighbourhood": "Crescent Park",
+  "city": "Palo Alto",
+  "postcode": 94303,
+  "county": "Santa Clara County",
+  "state": "California",
+  "country": "United States of America",
+  "country_code": "US",
+}, {
+  abbreviate: true,
+  country: 'UK'
+});
+```
+
+### Direct use on webpage
+
+```html
+<script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@1.0.0"></script>
+<script type="text/javascript">
+  const formatted = window.addressFormatter.format({
+    "house_number": 301,
+    "road": "Hamilton Avenue",
+    "neighbourhood": "Crescent Park",
+    "city": "Palo Alto",
+    "postcode": 94303,
+    "county": "Santa Clara County",
+    "state": "California",
+    "country": "United States of America",
+    "country_code": "US",
+  });
+  const abbreviatedUkFormat = window.addressFormatter.format({
+    "house_number": 301,
+    "road": "Hamilton Avenue",
+    "neighbourhood": "Crescent Park",
+    "city": "Palo Alto",
+    "postcode": 94303,
+    "county": "Santa Clara County",
+    "state": "California",
+    "country": "United States of America",
+    "country_code": "US",
+  }, {
+    abbreviate: 1,
+    country: 'UK'
+  });
+</script>
+```
 
 ## Development & Tests
 
