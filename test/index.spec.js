@@ -89,6 +89,14 @@ describe('address-formatter', () => {
       });
       expect(converted).toHaveProperty('country_code', 'AW');
     });
+
+    it('should do nothing for NL if no special case is met', () => {
+      const converted = addressFormatter._determineCountryCode({
+        'country_code': 'NL',
+        'state': 'Not A-ruba',
+      });
+      expect(converted).toHaveProperty('country_code', 'NL');
+    });
   });
 
   describe('applyAliases', () => {
@@ -136,7 +144,104 @@ describe('address-formatter', () => {
     });
   });
 
-  xdescribe('cleanupInput', () => {});
+  describe('cleanupInput', () => {
+    it('should replace country with state if country is numeric', () => {
+      const converted = addressFormatter._cleanupInput({
+        country: 123,
+        state: 'Slovakia',
+      });
+      expect(converted).toHaveProperty('country', 'Slovakia');
+    });
+
+    it('should determine state code from state if possible', () => {
+      const converted = addressFormatter._cleanupInput({
+        state: 'Alabama',
+        country_code: 'US',
+      });
+      expect(converted).toHaveProperty('state_code', 'AL');
+    });
+
+    it('should cleanup for Washington D.C.', () => {
+      const converted = addressFormatter._cleanupInput({
+        state: 'Washington D.C.',
+        country_code: 'US',
+      });
+      expect(converted).toHaveProperty('state_code', 'DC');
+      expect(converted).toHaveProperty('state', 'District of Columbia');
+      expect(converted).toHaveProperty('city', 'Washington');
+    });
+
+    it('should determine county code from county if possible', () => {
+      const converted = addressFormatter._cleanupInput({
+        county: 'Alessandria',
+        country_code: 'IT',
+      });
+      expect(converted).toHaveProperty('county_code', 'AL');
+    });
+
+    it('should put together attention from unknown components', () => {
+      const converted = addressFormatter._cleanupInput({
+        pub: 'Pub',
+        name: 'Henry',
+        country_code: 'IT',
+      });
+      expect(converted).toHaveProperty('attention', 'Pub, Henry');
+    });
+
+    it('should drop lengthy post codes', () => {
+      const converted = addressFormatter._cleanupInput({
+        postcode: 'abcdefghijklmnopqrstuvwxyz',
+      });
+      expect(converted).not.toHaveProperty('postcode');
+    });
+
+    it('should drop post codes separated by ;', () => {
+      const converted = addressFormatter._cleanupInput({
+        postcode: '1234;5678',
+      });
+      expect(converted).not.toHaveProperty('postcode');
+    });
+
+    it('should pick the first from post codes separated by ,', () => {
+      const converted = addressFormatter._cleanupInput({
+        postcode: '12345,56789',
+      });
+      expect(converted).toHaveProperty('postcode', '12345');
+    });
+
+    it('should convert postcode to a string', () => {
+      const converted = addressFormatter._cleanupInput({
+        postcode: 123456,
+      });
+      expect(converted).toHaveProperty('postcode', '123456');
+    });
+
+    it('should drop anything that looks like url', () => {
+      const converted = addressFormatter._cleanupInput({
+        pub: 'http://google.com',
+        street: 'https://google.com',
+      });
+      expect(converted).not.toHaveProperty('pub');
+      expect(converted).not.toHaveProperty('street');
+    });
+
+    it('should apply replacements', () => {
+      const converted = addressFormatter._cleanupInput({
+        stadt: 'Stadtteil Hamburg',
+        city: 'Alt-Berlin',
+        place: 'Alt-Berlin',
+        platz: 'Bonn',
+      }, [
+        ['^Stadtteil ', ''],
+        ['city=Alt-Berlin', 'Berlin'],
+        ['platz=Alt-Berlin', 'Berlin'],
+      ]);
+      expect(converted).toHaveProperty('stadt', 'Hamburg');
+      expect(converted).toHaveProperty('city', 'Berlin');
+      expect(converted).toHaveProperty('place', 'Alt-Berlin');
+      expect(converted).toHaveProperty('platz', 'Bonn');
+    });
+  });
 
   describe('findTemplate', () => {
     it('should pick country template', () => {
@@ -196,6 +301,74 @@ describe('address-formatter', () => {
     });
   });
 
-  xdescribe('cleanupRender', () => {});
-  xdescribe('renderTemplate', () => {});
+  describe('renderTemplate', () => {
+    it('should render the appropriate template', () => {
+      const render = addressFormatter._renderTemplate(
+        {},
+        { road: 'House' }
+      );
+      expect(render).toBe(`House
+`);
+    });
+
+    it('should properly apply first modifier in a template', () => {
+      const render = addressFormatter._renderTemplate(
+        {},
+        { city: 'City', village: 'Village' }
+      );
+      expect(render).toBe(`City
+`);
+    });
+
+    it('should apply postformat_replace', () => {
+      const render = addressFormatter._renderTemplate(
+        { postformat_replace: [
+          ['^House', 'Building'],
+        ] },
+        { road: 'House' }
+      );
+      expect(render).toBe(`Building
+`);
+    });
+
+    it('should fallback to concatenation with empty output', () => {
+      const render = addressFormatter._renderTemplate(
+        { fallback_template: '' },
+        { pub: 'House' }
+      );
+      expect(render).toBe(`House
+`);
+    });
+  });
+
+  describe('format', () => {
+    it('should work for a full-fledged example', () => {
+      const formatted = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        country: 'Belgium',
+        country_code: 'be',
+        county: 'Antwerp',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      });
+      expect(formatted).toBe(`Meat & Eat
+Vrijheidstraat 63
+2000 Antwerp
+Belgium
+`);
+    });
+
+    it('should work for a minimal example', () => {
+      const formatted = addressFormatter.format({
+        road: 'Vrijheidstraat',
+      });
+      expect(formatted).toBe(`Vrijheidstraat
+`);
+    });
+  });
 });
