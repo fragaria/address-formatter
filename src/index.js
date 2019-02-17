@@ -4,6 +4,8 @@ const templates = require('./templates/templates.json');
 const aliases = require('./templates/aliases.json');
 const stateCodes = require('./templates/state-codes.json');
 const countyCodes = require('./templates/county-codes.json');
+const country2lang = require('./templates/country-to-lang.json');
+const abbreviations = require('./templates/abbreviations.json');
 
 const knownComponents = aliases.map((a) => a.alias);
 const VALID_REPLACEMENT_COMPONENTS = ['state'];
@@ -88,14 +90,14 @@ const getCountyCode = (county, countryCode) => {
   return found && found.key;
 };
 
-const cleanupInput = (input, replacements) => {
+const cleanupInput = (input, replacements = [], options = {}) => {
   // If the country is a number, use the state as country
   let inputKeys = Object.keys(input);
   if (input.country && input.state && Number.isInteger(input.country)) {
     input.country = input.state;
     delete input.state;
   }
-  if (replacements) {
+  if (replacements && replacements.length) {
     for (let i = 0; i < inputKeys.length; i++) {
       for (let j = 0; j < replacements.length; j++) {
         const componentRegex = new RegExp(`^${inputKeys[i]}=`);
@@ -146,6 +148,24 @@ const cleanupInput = (input, replacements) => {
       delete input.postcode;
     } else if (multiCodeMatch) {
       input.postcode = multiCodeMatch[1];
+    }
+  }
+
+  if (options.abbreviate && input.country_code && country2lang[input.country_code]) {
+    for (let i = 0; i < country2lang[input.country_code].length; i++) {
+      const lang = country2lang[input.country_code][i];
+      if (abbreviations[lang]) {
+        for (let j = 0; j < abbreviations[lang].length; j++) {
+          if (input[abbreviations[lang][j].component]) {
+            for (let k = 0; k < abbreviations[lang][j].replacements.length; k++) {
+              input[abbreviations[lang][j].component] = input[abbreviations[lang][j].component].replace(
+                new RegExp(`\\b${abbreviations[lang][j].replacements[k].src}\\b`),
+                abbreviations[lang][j].replacements[k].dest
+              );
+            }
+          }
+        }
+      }
     }
   }
   
@@ -247,12 +267,19 @@ const renderTemplate = (template, input) => {
 };
 
 module.exports = {
-  format: (input, options = {}) => {
+  format: (input, options = {
+    country: undefined,
+    abbreviate: false,
+  }) => {
     let realInput = Object.assign({}, input);
+    if (options.country) {
+      // eslint-disable-next-line camelcase
+      realInput.country_code = options.country;
+    }
     realInput = determineCountryCode(realInput);
     realInput = applyAliases(realInput);
     const template = findTemplate(realInput);
-    realInput = cleanupInput(realInput, template.replace);
+    realInput = cleanupInput(realInput, template.replace, options);
     return renderTemplate(template, realInput);
   },
   _determineCountryCode: determineCountryCode,

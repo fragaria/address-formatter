@@ -241,6 +241,16 @@ describe('address-formatter', () => {
       expect(converted).toHaveProperty('place', 'Alt-Berlin');
       expect(converted).toHaveProperty('platz', 'Bonn');
     });
+
+    it('should apply abbreviations', () => {
+      const converted = addressFormatter._cleanupInput({
+        stadt: 'Stadtteil Hamburg',
+        city: 'Alt-Berlin',
+        place: 'Alt-Berlin',
+        platz: 'Bonn',
+      }, [], { abbreviate: true });
+      expect(converted).toHaveProperty('platz', 'Bonn');
+    });
   });
 
   describe('findTemplate', () => {
@@ -368,6 +378,30 @@ Belgium
         road: 'Vrijheidstraat',
       });
       expect(formatted).toBe(`Vrijheidstraat
+`);
+    });
+
+    it('should allow to pass a country code as an option', () => {
+      const formatted = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        country: 'Belgium',
+        country_code: 'be',
+        county: 'Antwerp',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      }, {
+        country: 'US',
+      }
+      );
+      expect(formatted).toBe(`Meat & Eat
+63 Vrijheidstraat
+Antwerp, Flanders 2000
+Belgium
 `);
     });
   });

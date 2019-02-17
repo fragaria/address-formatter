@@ -20,12 +20,23 @@ function convert(src, dest, modifier, multiDoc) {
   fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(modifier(doc)));
 }
 
-function converAbbreviations(src, dest) {
+function convertAbbreviations(src, dest) {
   const list = fs.readdirSync(path.resolve(SRC_PATH, src));
   const result = {};
   for (let i = 0; i < list.length; i++) {
     const name = list[i].split('.')[0];
-    result[name.toUpperCase()] = yaml.safeLoad(fs.readFileSync(path.resolve(SRC_PATH, src, list[i]), 'utf8'));
+    const loaded = yaml.safeLoad(fs.readFileSync(path.resolve(SRC_PATH, src, list[i]), 'utf8'));
+    result[name.toUpperCase()] = Object.keys(loaded).map((k) => {
+      return {
+        component: k,
+        replacements: Object.keys(loaded[k]).map((l) => {
+          return {
+            src: l,
+            dest: loaded[k][l],
+          };
+        })
+      };
+    });
   }
   fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(result));
 }
@@ -43,7 +54,12 @@ try {
       return agg.concat(aliases).concat({alias: curr.name, name: curr.name});
     }, [])
   }, true);
-  convert('country2lang.yaml', 'country-to-lang.json', (s) => s);
+  convert('country2lang.yaml', 'country-to-lang.json', (s) => {
+    return Object.keys(s).reduce((agg, curr) => {
+      agg[curr] = s[curr].split(',').map((s) => s.toUpperCase());
+      return agg;
+    }, {});
+  });
   convert('county_codes.yaml', 'county-codes.json', (s) => {
     return Object.keys(s).reduce((agg, curr) => {
       agg[curr] = Object.keys(s[curr]).map((k) => {
@@ -66,7 +82,7 @@ try {
       return agg;
     }, {});
   });
-  converAbbreviations('abbreviations/', 'abbreviations.json');
+  convertAbbreviations('abbreviations/', 'abbreviations.json');
 } catch (e) {
   console.error(e);
   process.exit(1);
