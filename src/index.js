@@ -1,9 +1,9 @@
 const Mustache = require('mustache');
 
-const templates = require('./templates/templates');
-const aliases = require('./templates/aliases');
-const stateCodes = require('./templates/state-codes');
-const countyCodes = require('./templates/county-codes');
+const templates = require('./templates/templates.json');
+const aliases = require('./templates/aliases.json');
+const stateCodes = require('./templates/state-codes.json');
+const countyCodes = require('./templates/county-codes.json');
 
 const knownComponents = aliases.map((a) => a.alias);
 const VALID_REPLACEMENT_COMPONENTS = ['state'];
@@ -73,18 +73,9 @@ const getStateCode = (state, countryCode) => {
   if (!stateCodes[countryCode]) {
     return;
   }
-  let found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
-
   // TODO what if state is actually the stateCode?
   // https://github.com/OpenCageData/perl-Geo-Address-Formatter/blob/master/lib/Geo/Address/Formatter.pm#L526
-
-  if (!found && countryCode === 'US') {
-    if (state.match(/^united states/i)) {
-      const stateName = state.replace(/^united states/i, 'US');
-      found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === stateName.toUpperCase());
-    }
-  }
-
+  let found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
   return found && found.key;
 };
 
@@ -92,6 +83,7 @@ const getCountyCode = (county, countryCode) => {
   if (!countyCodes[countryCode]) {
     return;
   }
+  // TODO what if county is actually the countyCode?
   const found = countyCodes[countryCode].find((e) => e.name.toUpperCase() === county.toUpperCase());
   return found && found.key;
 };
@@ -182,12 +174,11 @@ const chooseTemplateText = (template, input) => {
     .filter((s) => !s)
     .length;
   if (missingValuesCnt === threshold) {
-    selected = template.fallback_template || templates.default.fallback_template || '';
+    selected = template.fallback_template || templates.default.fallback_template;
   }
-  return selected || template.address_template;
+  return selected;
 };
 
-// TODO unit test properly
 const cleanupRender = (text) => {
   const replacements = [
     { s: /[},\s]+$/u, d: '' },
@@ -224,7 +215,6 @@ const cleanupRender = (text) => {
   return text.trim();
 };
 
-// TODO unit test properly
 const renderTemplate = (template, input) => {
   const templateText = chooseTemplateText(template, input);
   const templateInput = Object.assign({}, input, {
@@ -265,4 +255,13 @@ module.exports = {
     realInput = cleanupInput(realInput, template.replace);
     return renderTemplate(template, realInput);
   },
+  _determineCountryCode: determineCountryCode,
+  _applyAliases: applyAliases,
+  _getStateCode: getStateCode,
+  _getCountyCode: getCountyCode,
+  _cleanupInput: cleanupInput,
+  _findTemplate: findTemplate,
+  _chooseTemplateText: chooseTemplateText,
+  _cleanupRender: cleanupRender,
+  _renderTemplate: renderTemplate,
 };
