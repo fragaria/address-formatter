@@ -99,6 +99,8 @@ $ git clone git@github.com:fragaria/address-formatter.git
 $ cd address-formatter
 # Install the proper NodeJS
 $ nvm install
+# Download the /OpenCageData/address-formatting/ spec
+$ npm run pull-submodules
 # Install dependencies
 $ npm install
 # Generate JS-friendly spec
