@@ -480,5 +480,30 @@ Belgium
       expect(formatted[2]).toBe('2000 Antwerp');
       expect(formatted[3]).toBe('Belgium');
     });
+
+    it('should should not replace the country if append is requested', () => {
+      const formatted = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        countryCode: 'be',
+        county: 'Antwerp',
+        country: 'belgium',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      }, {
+        output: 'array',
+        appendCountry: true,
+      }
+      );
+      expect(formatted.length).toBe(4);
+      expect(formatted[0]).toBe('Meat & Eat');
+      expect(formatted[1]).toBe('Vrijheidstraat 63');
+      expect(formatted[2]).toBe('2000 Antwerp');
+      expect(formatted[3]).toBe('belgium');
+    });
   });
 });

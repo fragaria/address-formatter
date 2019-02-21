@@ -292,7 +292,7 @@ module.exports = {
       realInput.country_code = options.countryCode;
     }
     realInput = determineCountryCode(realInput);
-    if (options.appendCountry && countryNames[realInput.country_code]) {
+    if (options.appendCountry && countryNames[realInput.country_code] && !realInput.country) {
       realInput.country = countryNames[realInput.country_code];
     }
     realInput = applyAliases(realInput);
