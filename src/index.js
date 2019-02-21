@@ -1,11 +1,11 @@
 const Mustache = require('mustache');
-
 const templates = require('./templates/templates.json');
 const aliases = require('./templates/aliases.json');
 const stateCodes = require('./templates/state-codes.json');
 const countyCodes = require('./templates/county-codes.json');
 const country2lang = require('./templates/country-to-lang.json');
 const abbreviations = require('./templates/abbreviations.json');
+const countryNames = require('./templates/country-names.json');
 
 const knownComponents = aliases.map((a) => a.alias);
 const VALID_REPLACEMENT_COMPONENTS = ['state'];
@@ -280,17 +280,21 @@ const renderTemplate = (template, input) => {
 
 module.exports = {
   format: (input, options = {
-    country: undefined,
+    countryCode: undefined,
     abbreviate: false,
     output: 'string',
+    appendCountry: false,
   }) => {
     let realInput = Object.assign({}, input);
     realInput = normalizeComponentKeys(realInput);
-    if (options.country) {
+    if (options.countryCode) {
       // eslint-disable-next-line camelcase
-      realInput.country_code = options.country;
+      realInput.country_code = options.countryCode;
     }
     realInput = determineCountryCode(realInput);
+    if (options.appendCountry && countryNames[realInput.country_code]) {
+      realInput.country = countryNames[realInput.country_code];
+    }
     realInput = applyAliases(realInput);
     const template = findTemplate(realInput);
     realInput = cleanupInput(realInput, template.replace, options);

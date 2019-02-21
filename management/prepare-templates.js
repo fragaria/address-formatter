@@ -41,6 +41,12 @@ function convertAbbreviations(src, dest) {
   fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(result));
 }
 
+function convertCountryCodes(src, dest) {
+  const contents = fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8');
+  doc = yaml.safeLoad(contents.replace(/ \# /g, ' '));
+  fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(doc));
+}
+
 try {
   convert('countries/worldwide.yaml', 'templates.json', (s) => s);
   convert('components.yaml', 'aliases.json', (s) => {
@@ -83,6 +89,7 @@ try {
     }, {});
   });
   convertAbbreviations('abbreviations/', 'abbreviations.json');
+  convertCountryCodes('country_codes.yaml', 'country-names.json');
 } catch (e) {
   console.error(e);
   process.exit(1);

@@ -48,6 +48,23 @@ const formatted = addressFormatter.format({
 Palo Alto, CA 94303
 United States of America
 */
+const formattedWithAppendedCountry = addressFormatter.format({
+  "houseNumber": 301,
+  "road": "Hamilton Avenue",
+  "neighbourhood": "Crescent Park",
+  "city": "Palo Alto",
+  "postcode": 94303,
+  "county": "Santa Clara County",
+  "state": "California",
+  "countryCode": "US",
+}, {
+  appendCountry: true
+});
+/*
+301 Hamilton Avenue
+Palo Alto, CA 94303
+United States of America
+*/
 const abbreviatedUkFormat = addressFormatter.format({
   "houseNumber": 301,
   "road": "Hamilton Avenue",
@@ -60,7 +77,7 @@ const abbreviatedUkFormat = addressFormatter.format({
   "countryCode": "US",
 }, {
   abbreviate: true,
-  country: 'UK'
+  countryCode: 'UK'
 });
 /*
 301 Hamilton Ave

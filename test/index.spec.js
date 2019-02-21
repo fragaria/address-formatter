@@ -422,7 +422,7 @@ Belgium
         road: 'Vrijheidstraat',
         state: 'Flanders',
       }, {
-        country: 'US',
+        countryCode: 'US',
       }
       );
       expect(formatted).toBe(`Meat & Eat
@@ -446,7 +446,7 @@ Belgium
         road: 'Vrijheidstraat',
         state: 'Flanders',
       }, {
-        country: 'US',
+        countryCode: 'US',
         output: 'array',
       }
       );
@@ -454,6 +454,30 @@ Belgium
       expect(formatted[0]).toBe('Meat & Eat');
       expect(formatted[1]).toBe('63 Vrijheidstraat');
       expect(formatted[2]).toBe('Antwerp, Flanders 2000');
+      expect(formatted[3]).toBe('Belgium');
+    });
+
+    it('should append country if requested', () => {
+      const formatted = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        countryCode: 'be',
+        county: 'Antwerp',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      }, {
+        output: 'array',
+        appendCountry: true,
+      }
+      );
+      expect(formatted.length).toBe(4);
+      expect(formatted[0]).toBe('Meat & Eat');
+      expect(formatted[1]).toBe('Vrijheidstraat 63');
+      expect(formatted[2]).toBe('2000 Antwerp');
       expect(formatted[3]).toBe('Belgium');
     });
   });
