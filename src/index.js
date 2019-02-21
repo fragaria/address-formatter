@@ -282,6 +282,7 @@ module.exports = {
   format: (input, options = {
     country: undefined,
     abbreviate: false,
+    output: 'string',
   }) => {
     let realInput = Object.assign({}, input);
     if (options.country) {
@@ -293,7 +294,11 @@ module.exports = {
     realInput = applyAliases(realInput);
     const template = findTemplate(realInput);
     realInput = cleanupInput(realInput, template.replace, options);
-    return renderTemplate(template, realInput);
+    const result = renderTemplate(template, realInput);
+    if (options.output === 'array') {
+      return result.split('\n').filter((f) => !!f);
+    }
+    return result;
   },
   _determineCountryCode: determineCountryCode,
   _normalizeComponentKeys: normalizeComponentKeys,

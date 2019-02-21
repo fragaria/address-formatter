@@ -431,5 +431,30 @@ Antwerp, Flanders 2000
 Belgium
 `);
     });
+
+    it('should return array if requested', () => {
+      const formatted = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        country: 'Belgium',
+        country_code: 'be',
+        county: 'Antwerp',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      }, {
+        country: 'US',
+        output: 'array',
+      }
+      );
+      expect(formatted.length).toBe(4);
+      expect(formatted[0]).toBe('Meat & Eat');
+      expect(formatted[1]).toBe('63 Vrijheidstraat');
+      expect(formatted[2]).toBe('Antwerp, Flanders 2000');
+      expect(formatted[3]).toBe('Belgium');
+    });
   });
 });
