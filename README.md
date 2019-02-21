@@ -67,6 +67,26 @@ const abbreviatedUkFormat = addressFormatter.format({
 Palo Alto 94303
 USA
 */
+const formatted = addressFormatter.format({
+  "houseNumber": 301,
+  "road": "Hamilton Avenue",
+  "neighbourhood": "Crescent Park",
+  "city": "Palo Alto",
+  "postcode": 94303,
+  "county": "Santa Clara County",
+  "state": "California",
+  "country": "United States of America",
+  "countryCode": "US",
+}, {
+  output: 'array'
+});
+/*
+[
+  '301 Hamilton Avenue',
+  'Palo Alto, CA 94303',
+  'United States of America'
+]
+*/
 ```
 
 ### Direct use on webpage
@@ -89,25 +109,6 @@ USA
   301 Hamilton Avenue
   Palo Alto, CA 94303
   United States of America
-  */
-  const abbreviatedUkFormat = window.addressFormatter.format({
-    "houseNumber": 301,
-    "road": "Hamilton Avenue",
-    "neighbourhood": "Crescent Park",
-    "city": "Palo Alto",
-    "postcode": 94303,
-    "county": "Santa Clara County",
-    "state": "California",
-    "country": "United States of America",
-    "country_code": "US",
-  }, {
-    abbreviate: 1,
-    country: 'UK'
-  });
-  /*
-  301 Hamilton Ave
-  Palo Alto 94303
-  USA
   */
 </script>
 ```
