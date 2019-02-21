@@ -30,7 +30,8 @@
   "author": "Jirka Chadima <chadima.jiri@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "mustache": "^3.0.1"
+    "mustache": "^3.0.1",
+    "rollup-plugin-babel": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",

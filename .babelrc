@@ -6,7 +6,8 @@
         "targets": {
           "node": "10",
           "browsers": [
-            "last 2 versions"
+            "last 2 versions",
+            "safari >= 7"
           ]
         }
       }
