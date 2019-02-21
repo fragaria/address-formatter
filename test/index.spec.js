@@ -99,6 +99,33 @@ describe('address-formatter', () => {
     });
   });
 
+  describe('_normalizeComponentKeys', () => {
+    it('should normalize camelCase component names', () => {
+      const mapping = [
+        ['streetNumber', 'street_number'],
+        ['houseNumber', 'house_number'],
+        ['publicBuilding', 'public_building'],
+        ['streetName', 'street_name'],
+        ['roadReference', 'road_reference'],
+        ['roadReferenceIntl', 'road_reference_intl'],
+        ['cityDistrict', 'city_district'],
+        ['localAdministrativeArea', 'local_administrative_area'],
+        ['countyCode', 'county_code'],
+        ['stateDistrict', 'state_district'],
+        ['stateCode', 'state_code'],
+        ['countryName', 'country_name'],
+        ['countryCode', 'country_code'],
+      ];
+
+      for (let i = 0; i < mapping.length; i++) {
+        const converted = addressFormatter._normalizeComponentKeys({ [mapping[i][0]]: 'string' });
+        expect(converted).toHaveProperty(mapping[i][1]);
+        expect(converted).not.toHaveProperty(mapping[i][0]);
+        expect(converted).not.toHaveProperty('attention');
+      }
+    });
+  });
+
   describe('applyAliases', () => {
     it('should apply aliases', () => {
       const converted = addressFormatter._applyAliases({
@@ -356,10 +383,10 @@ describe('address-formatter', () => {
       const formatted = addressFormatter.format({
         city: 'Antwerp',
         city_district: 'Antwerpen',
-        country: 'Belgium',
-        country_code: 'be',
+        countryName: 'Belgium',
+        countryCode: 'be',
         county: 'Antwerp',
-        house_number: 63,
+        houseNumber: 63,
         neighbourhood: 'Sint-Andries',
         postcode: 2000,
         restaurant: 'Meat & Eat',

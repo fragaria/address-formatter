@@ -61,6 +61,18 @@ const determineCountryCode = (input) => {
   return input;
 };
 
+const normalizeComponentKeys = (input) => {
+  let inputKeys = Object.keys(input);
+  for (let i = 0; i < inputKeys.length; i++) {
+    const snaked = inputKeys[i].replace(/([A-Z])/g, '_$1').toLowerCase();
+    if (knownComponents.indexOf(snaked) > -1 && !input[snaked]) {
+      input[snaked] = input[inputKeys[i]];
+      delete input[inputKeys[i]];
+    }
+  }
+  return input;
+};
+
 const applyAliases = (input) => {
   for (let i = 0; i < aliases.length; i++) {
     const item = aliases[i];
@@ -277,12 +289,14 @@ module.exports = {
       realInput.country_code = options.country;
     }
     realInput = determineCountryCode(realInput);
+    realInput = normalizeComponentKeys(realInput);
     realInput = applyAliases(realInput);
     const template = findTemplate(realInput);
     realInput = cleanupInput(realInput, template.replace, options);
     return renderTemplate(template, realInput);
   },
   _determineCountryCode: determineCountryCode,
+  _normalizeComponentKeys: normalizeComponentKeys,
   _applyAliases: applyAliases,
   _getStateCode: getStateCode,
   _getCountyCode: getCountyCode,
