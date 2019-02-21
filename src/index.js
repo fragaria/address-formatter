@@ -285,12 +285,12 @@ module.exports = {
     output: 'string',
   }) => {
     let realInput = Object.assign({}, input);
+    realInput = normalizeComponentKeys(realInput);
     if (options.country) {
       // eslint-disable-next-line camelcase
       realInput.country_code = options.country;
     }
     realInput = determineCountryCode(realInput);
-    realInput = normalizeComponentKeys(realInput);
     realInput = applyAliases(realInput);
     const template = findTemplate(realInput);
     realInput = cleanupInput(realInput, template.replace, options);

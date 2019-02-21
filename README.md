@@ -33,7 +33,7 @@ npm i @fragaria/address-formatter
 ```js
 const addressFormatter = require('@fragaria/address-formatter');
 const formatted = addressFormatter.format({
-  "house_number": 301,
+  "houseNumber": 301,
   "road": "Hamilton Avenue",
   "neighbourhood": "Crescent Park",
   "city": "Palo Alto",
@@ -41,10 +41,15 @@ const formatted = addressFormatter.format({
   "county": "Santa Clara County",
   "state": "California",
   "country": "United States of America",
-  "country_code": "US",
+  "countryCode": "US",
 });
+/*
+301 Hamilton Avenue
+Palo Alto, CA 94303
+United States of America
+*/
 const abbreviatedUkFormat = addressFormatter.format({
-  "house_number": 301,
+  "houseNumber": 301,
   "road": "Hamilton Avenue",
   "neighbourhood": "Crescent Park",
   "city": "Palo Alto",
@@ -52,11 +57,16 @@ const abbreviatedUkFormat = addressFormatter.format({
   "county": "Santa Clara County",
   "state": "California",
   "country": "United States of America",
-  "country_code": "US",
+  "countryCode": "US",
 }, {
   abbreviate: true,
   country: 'UK'
 });
+/*
+301 Hamilton Ave
+Palo Alto 94303
+USA
+*/
 ```
 
 ### Direct use on webpage
@@ -65,7 +75,7 @@ const abbreviatedUkFormat = addressFormatter.format({
 <script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@1.0.0"></script>
 <script type="text/javascript">
   const formatted = window.addressFormatter.format({
-    "house_number": 301,
+    "houseNumber": 301,
     "road": "Hamilton Avenue",
     "neighbourhood": "Crescent Park",
     "city": "Palo Alto",
@@ -73,10 +83,15 @@ const abbreviatedUkFormat = addressFormatter.format({
     "county": "Santa Clara County",
     "state": "California",
     "country": "United States of America",
-    "country_code": "US",
+    "countryCode": "US",
   });
+  /*
+  301 Hamilton Avenue
+  Palo Alto, CA 94303
+  United States of America
+  */
   const abbreviatedUkFormat = window.addressFormatter.format({
-    "house_number": 301,
+    "houseNumber": 301,
     "road": "Hamilton Avenue",
     "neighbourhood": "Crescent Park",
     "city": "Palo Alto",
@@ -89,6 +104,11 @@ const abbreviatedUkFormat = addressFormatter.format({
     abbreviate: 1,
     country: 'UK'
   });
+  /*
+  301 Hamilton Ave
+  Palo Alto 94303
+  USA
+  */
 </script>
 ```
 
