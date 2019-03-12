@@ -30,8 +30,7 @@
   "author": "Jirka Chadima <chadima.jiri@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "mustache": "^3.0.1",
-    "rollup-plugin-babel": "^4.3.2"
+    "mustache": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
@@ -56,6 +55,7 @@
     "js-yaml": "^3.12.1",
     "rimraf": "^2.6.2",
     "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^4.0.0",
