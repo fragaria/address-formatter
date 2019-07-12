@@ -62,7 +62,7 @@ const determineCountryCode = (input) => {
 };
 
 const normalizeComponentKeys = (input) => {
-  let inputKeys = Object.keys(input);
+  const inputKeys = Object.keys(input);
   for (let i = 0; i < inputKeys.length; i++) {
     const snaked = inputKeys[i].replace(/([A-Z])/g, '_$1').toLowerCase();
     if (knownComponents.indexOf(snaked) > -1 && !input[snaked]) {
@@ -89,7 +89,7 @@ const getStateCode = (state, countryCode) => {
   }
   // TODO what if state is actually the stateCode?
   // https://github.com/OpenCageData/perl-Geo-Address-Formatter/blob/master/lib/Geo/Address/Formatter.pm#L526
-  let found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
+  const found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
   return found && found.key;
 };
 
@@ -230,7 +230,7 @@ const cleanupRender = (text) => {
     const seen = {};
     const result = [];
     for (let i = 0; i < inputChunks.length; i++) {
-      let chunk = inputChunks[i].trim();
+      const chunk = inputChunks[i].trim();
       if (!seen[chunk]) {
         seen[chunk] = 1;
         result.push(modifier(chunk));
@@ -250,7 +250,7 @@ const cleanupRender = (text) => {
 const renderTemplate = (template, input) => {
   const templateText = chooseTemplateText(template, input);
   const templateInput = Object.assign({}, input, {
-    'first': () => {
+    first: () => {
       return (text, render) => {
         const possibilities = render(text, input)
           .split(/\s*\|\|\s*/)

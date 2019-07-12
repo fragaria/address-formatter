@@ -68,32 +68,32 @@ describe('address-formatter', () => {
     });
     it('should convert Sint Maarten to SX country code', () => {
       const converted = addressFormatter._determineCountryCode({
-        'country_code': 'NL',
-        'state': 'Sint Maarten',
+        country_code: 'NL',
+        state: 'Sint Maarten',
       });
       expect(converted).toHaveProperty('country_code', 'SX');
     });
 
     it('should convert Curaçao to CW country code', () => {
       const converted = addressFormatter._determineCountryCode({
-        'country_code': 'NL',
-        'state': 'Curaçao',
+        country_code: 'NL',
+        state: 'Curaçao',
       });
       expect(converted).toHaveProperty('country_code', 'CW');
     });
 
     it('should convert Aruba to AW country code', () => {
       const converted = addressFormatter._determineCountryCode({
-        'country_code': 'NL',
-        'state': 'Aruba',
+        country_code: 'NL',
+        state: 'Aruba',
       });
       expect(converted).toHaveProperty('country_code', 'AW');
     });
 
     it('should do nothing for NL if no special case is met', () => {
       const converted = addressFormatter._determineCountryCode({
-        'country_code': 'NL',
-        'state': 'Not A-ruba',
+        country_code: 'NL',
+        state: 'Not A-ruba',
       });
       expect(converted).toHaveProperty('country_code', 'NL');
     });
@@ -129,14 +129,14 @@ describe('address-formatter', () => {
   describe('applyAliases', () => {
     it('should apply aliases', () => {
       const converted = addressFormatter._applyAliases({
-        'street_number': 123,
+        street_number: 123,
       });
       expect(converted).toHaveProperty('house_number', 123);
     });
 
     it('should not overwrite aliases', () => {
       const converted = addressFormatter._applyAliases({
-        'street_number': 123,
+        street_number: 123,
         house_number: 456,
       });
       expect(converted).toHaveProperty('house_number', 456);
