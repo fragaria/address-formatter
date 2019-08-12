@@ -74,10 +74,11 @@ const normalizeComponentKeys = (input) => {
 };
 
 const applyAliases = (input) => {
-  for (let i = 0; i < aliases.length; i++) {
-    const item = aliases[i];
-    if (!input[item.name] && input[item.alias]) {
-      input[item.name] = input[item.alias];
+  const inputKeys = Object.keys(input);
+  for (let i = 0; i < inputKeys.length; i++) {
+    const alias = aliases.find((a) => a.alias === inputKeys[i]);
+    if (alias && !input[alias.name]) {
+      input[alias.name] = input[alias.alias];
     }
   }
   return input;
