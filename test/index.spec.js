@@ -359,9 +359,11 @@ describe('address-formatter', () => {
 
     it('should apply postformat_replace', () => {
       const render = addressFormatter._renderTemplate(
-        { postformat_replace: [
-          ['^House', 'Building'],
-        ] },
+        {
+          postformat_replace: [
+            ['^House', 'Building'],
+          ],
+        },
         { road: 'House' }
       );
       expect(render).toBe(`Building
