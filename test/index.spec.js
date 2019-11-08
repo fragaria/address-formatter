@@ -455,6 +455,49 @@ Belgium
 `);
     });
 
+    it('should use a fallbackCountryCode when necessary', () => {
+      const formattedWithFallback = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        country: 'Belgium',
+        country_code: 'yu',
+        county: 'Antwerp',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      }, {
+        fallbackCountryCode: 'US',
+      });
+      expect(formattedWithFallback).toBe(`Meat & Eat
+63 Vrijheidstraat
+Antwerp, Flanders 2000
+Belgium
+`);
+      const formatted = addressFormatter.format({
+        city: 'Antwerp',
+        city_district: 'Antwerpen',
+        country: 'Belgium',
+        country_code: 'be',
+        county: 'Antwerp',
+        house_number: 63,
+        neighbourhood: 'Sint-Andries',
+        postcode: 2000,
+        restaurant: 'Meat & Eat',
+        road: 'Vrijheidstraat',
+        state: 'Flanders',
+      }, {
+        fallbackCountryCode: 'US',
+      });
+      expect(formatted).toBe(`Meat & Eat
+Vrijheidstraat 63
+2000 Antwerp
+Belgium
+`);
+    });
+
     it('should return array if requested', () => {
       const formatted = addressFormatter.format({
         city: 'Antwerp',

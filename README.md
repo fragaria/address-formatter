@@ -32,6 +32,8 @@ npm i @fragaria/address-formatter
 
 ```js
 const addressFormatter = require('@fragaria/address-formatter');
+
+// Basic examples
 const formatted = addressFormatter.format({
   "houseNumber": 301,
   "road": "Hamilton Avenue",
@@ -65,6 +67,8 @@ const formattedWithAppendedCountry = addressFormatter.format({
 Palo Alto, CA 94303
 United States of America
 */
+
+// You can overwrite the country code incoming from the map service
 const abbreviatedUkFormat = addressFormatter.format({
   "houseNumber": 301,
   "road": "Hamilton Avenue",
@@ -84,6 +88,29 @@ const abbreviatedUkFormat = addressFormatter.format({
 Palo Alto 94303
 USA
 */
+
+// You can use a fallback to keep the library working when the country code is wrong
+const fallbackCountryCode = addressFormatter.format({
+  "houseNumber": 301,
+  "road": "Hamilton Avenue",
+  "neighbourhood": "Crescent Park",
+  "city": "Palo Alto",
+  "postcode": 94303,
+  "county": "Santa Clara County",
+  "state": "California",
+  "country": "United States of America",
+  "countryCode": "yu",
+}, {
+  abbreviate: true,
+  fallbackCountryCode: 'UK'
+});
+/*
+301 Hamilton Ave
+Palo Alto 94303
+USA
+*/
+
+// You can get the address as a list of lines to make your formatting easier
 const formatted = addressFormatter.format({
   "houseNumber": 301,
   "road": "Hamilton Avenue",

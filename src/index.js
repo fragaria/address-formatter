@@ -10,8 +10,11 @@ const countryNames = require('./templates/country-names.json');
 const knownComponents = aliases.map((a) => a.alias);
 const VALID_REPLACEMENT_COMPONENTS = ['state'];
 
-const determineCountryCode = (input) => {
+const determineCountryCode = (input, fallbackCountryCode = null) => {
   let countryCode = input.country_code && input.country_code.toUpperCase();
+  if (!templates[countryCode] && fallbackCountryCode) {
+    countryCode = fallbackCountryCode.toUpperCase();
+  }
   if (!countryCode || countryCode.length !== 2) {
     // TODO change this to exceptions
     return input;
@@ -19,6 +22,7 @@ const determineCountryCode = (input) => {
   if (countryCode === 'UK') {
     countryCode = 'GB';
   }
+
   if (templates[countryCode] && templates[countryCode].use_country) {
     const oldCountryCode = countryCode;
     countryCode = templates[countryCode].use_country.toUpperCase();
@@ -292,7 +296,7 @@ module.exports = {
       // eslint-disable-next-line camelcase
       realInput.country_code = options.countryCode;
     }
-    realInput = determineCountryCode(realInput);
+    realInput = determineCountryCode(realInput, options.fallbackCountryCode);
     if (options.appendCountry && countryNames[realInput.country_code] && !realInput.country) {
       realInput.country = countryNames[realInput.country_code];
     }
