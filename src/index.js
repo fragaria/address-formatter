@@ -19,7 +19,7 @@ const determineCountryCode = (input) => {
   if (countryCode === 'UK') {
     countryCode = 'GB';
   }
-  if (templates[countryCode].use_country) {
+  if (templates[countryCode] && templates[countryCode].use_country) {
     const oldCountryCode = countryCode;
     countryCode = templates[countryCode].use_country.toUpperCase();
     if (templates[oldCountryCode].change_country) {

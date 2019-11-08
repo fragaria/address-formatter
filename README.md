@@ -10,7 +10,7 @@ of that formatter.
 
 This library can format almost anything that comes out of
 Open Street Maps' [Nominatim API](https://wiki.openstreetmap.org/wiki/Nominatim)
-in `address` field. Other compatible sources of data 
+in the `address` field. Other compatible sources of data 
 such as [Photon](https://photon.komoot.de/) might be used as well.
 
 It can automatically detect the country's
