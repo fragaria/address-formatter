@@ -300,21 +300,21 @@ describe('address-formatter', () => {
     it('should use country address_template', () => {
       expect(addressFormatter._chooseTemplateText(
         { address_template: 'aa' },
-        { road: 'aa', postcode: 123 }
+        { road: 'aa', postcode: 123 },
       )).toBe('aa');
     });
 
     it('should use country fallback_template if not enough data is provided', () => {
       expect(addressFormatter._chooseTemplateText(
         { address_template: 'aa', fallback_template: 'fallback' },
-        { }
+        { },
       )).toBe('fallback');
     });
 
     it('should use default address_template if template does not have address_template', () => {
       expect(addressFormatter._chooseTemplateText(
         { },
-        { road: 'aa', postcode: 123 }
+        { road: 'aa', postcode: 123 },
       )).toBe(`{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
@@ -326,7 +326,7 @@ describe('address-formatter', () => {
     it('should use default fallback_template if not enough data is provided and template does not have fallback_template', () => {
       expect(addressFormatter._chooseTemplateText(
         { },
-        { }
+        { },
       )).toBe(`{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
@@ -342,7 +342,7 @@ describe('address-formatter', () => {
     it('should render the appropriate template', () => {
       const render = addressFormatter._renderTemplate(
         {},
-        { road: 'House' }
+        { road: 'House' },
       );
       expect(render).toBe(`House
 `);
@@ -351,7 +351,7 @@ describe('address-formatter', () => {
     it('should properly apply first modifier in a template', () => {
       const render = addressFormatter._renderTemplate(
         {},
-        { city: 'City', village: 'Village' }
+        { city: 'City', village: 'Village' },
       );
       expect(render).toBe(`City
 `);
@@ -364,7 +364,7 @@ describe('address-formatter', () => {
             ['^House', 'Building'],
           ],
         },
-        { road: 'House' }
+        { road: 'House' },
       );
       expect(render).toBe(`Building
 `);
@@ -373,7 +373,7 @@ describe('address-formatter', () => {
     it('should fallback to concatenation with empty output', () => {
       const render = addressFormatter._renderTemplate(
         { fallback_template: '' },
-        { pub: 'House' }
+        { pub: 'House' },
       );
       expect(render).toBe(`House
 `);
@@ -425,7 +425,7 @@ Belgium
         state: 'Flanders',
       }, {
         countryCode: 'US',
-      }
+      },
       );
       expect(formatted).toBe(`Meat & Eat
 63 Vrijheidstraat
@@ -514,7 +514,7 @@ Belgium
       }, {
         countryCode: 'US',
         output: 'array',
-      }
+      },
       );
       expect(formatted.length).toBe(4);
       expect(formatted[0]).toBe('Meat & Eat');
@@ -538,7 +538,7 @@ Belgium
       }, {
         output: 'array',
         appendCountry: true,
-      }
+      },
       );
       expect(formatted.length).toBe(4);
       expect(formatted[0]).toBe('Meat & Eat');
@@ -563,7 +563,7 @@ Belgium
       }, {
         output: 'array',
         appendCountry: true,
-      }
+      },
       );
       expect(formatted.length).toBe(4);
       expect(formatted[0]).toBe('Meat & Eat');

@@ -177,7 +177,7 @@ const cleanupInput = (input, replacements = [], options = {}) => {
             for (let k = 0; k < abbreviations[lang][j].replacements.length; k++) {
               input[abbreviations[lang][j].component] = input[abbreviations[lang][j].component].replace(
                 new RegExp(`\\b${abbreviations[lang][j].replacements[k].src}\\b`),
-                abbreviations[lang][j].replacements[k].dest
+                abbreviations[lang][j].replacements[k].dest,
               );
             }
           }
