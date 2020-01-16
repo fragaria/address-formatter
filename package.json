@@ -30,7 +30,7 @@
   "author": "Jirka Chadima <chadima.jiri@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "mustache": "^3.2.0"
+    "mustache": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
