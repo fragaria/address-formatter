@@ -218,7 +218,7 @@ const chooseTemplateText = (template, input) => {
 
 const cleanupRender = (text) => {
   const replacements = [
-    { s: /[},\s]+$/u, d: '' },
+    { s: /[\},\s]+$/u, d: '' },
     { s: /^[,\s]+/u, d: '' },
     { s: /^- /u, d: '' }, // line starting with dash due to a parameter missing
     { s: /,\s*,/u, d: ', ' }, // multiple commas to one
