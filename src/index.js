@@ -218,6 +218,7 @@ const chooseTemplateText = (template, input) => {
 
 const cleanupRender = (text) => {
   const replacements = [
+    // eslint-disable-next-line no-useless-escape
     { s: /[\},\s]+$/u, d: '' },
     { s: /^[,\s]+/u, d: '' },
     { s: /^- /u, d: '' }, // line starting with dash due to a parameter missing
