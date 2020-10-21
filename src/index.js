@@ -284,6 +284,14 @@ const renderTemplate = (template, input) => {
   return render + '\n';
 };
 
+const removeFalsy = (obj = {}) => {
+  return Object.entries(obj).reduce((acc, entry) => {
+    const [key, value] = entry;
+    if (value) acc[key] = value;
+    return acc;
+  }, {});
+};
+
 module.exports = {
   format: (input, options = {
     countryCode: undefined,
@@ -292,6 +300,7 @@ module.exports = {
     appendCountry: false,
   }) => {
     let realInput = Object.assign({}, input);
+    realInput = removeFalsy(realInput);
     realInput = normalizeComponentKeys(realInput);
     if (options.countryCode) {
       // eslint-disable-next-line camelcase
