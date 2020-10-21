@@ -284,13 +284,11 @@ const renderTemplate = (template, input) => {
   return render + '\n';
 };
 
-const removeFalsy = (obj = {}) => {
-  return Object.entries(obj).reduce((acc, entry) => {
-    const [key, value] = entry;
-    if (value) acc[key] = value;
-    return acc;
-  }, {});
-};
+const removeFalsy = (obj = {}) => Object.entries(obj).reduce((acc, entry) => {
+  const [key, value] = entry;
+  if (value) acc[key] = value;
+  return acc;
+}, {});
 
 module.exports = {
   format: (input, options = {
