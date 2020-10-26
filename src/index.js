@@ -70,7 +70,9 @@ const normalizeComponentKeys = (input) => {
   for (let i = 0; i < inputKeys.length; i++) {
     const snaked = inputKeys[i].replace(/([A-Z])/g, '_$1').toLowerCase();
     if (knownComponents.indexOf(snaked) > -1 && !input[snaked]) {
-      input[snaked] = input[inputKeys[i]];
+      if (input[inputKeys[i]]) {
+        input[snaked] = input[inputKeys[i]];
+      }
       delete input[inputKeys[i]];
     }
   }
@@ -284,14 +286,6 @@ const renderTemplate = (template, input) => {
   return render + '\n';
 };
 
-const removeFalsy = (obj = {}) => Object.entries(obj).reduce((acc, entry) => {
-  const [key, value] = entry;
-  if (value) {
-    acc[key] = value;
-  }
-  return acc;
-}, {});
-
 module.exports = {
   format: (input, options = {
     countryCode: undefined,
@@ -300,7 +294,6 @@ module.exports = {
     appendCountry: false,
   }) => {
     let realInput = Object.assign({}, input);
-    realInput = removeFalsy(realInput);
     realInput = normalizeComponentKeys(realInput);
     if (options.countryCode) {
       // eslint-disable-next-line camelcase
