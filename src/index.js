@@ -286,7 +286,9 @@ const renderTemplate = (template, input) => {
 
 const removeFalsy = (obj = {}) => Object.entries(obj).reduce((acc, entry) => {
   const [key, value] = entry;
-  if (value) acc[key] = value;
+  if (value) {
+    acc[key] = value;
+  }
   return acc;
 }, {});
 
