@@ -571,5 +571,23 @@ Belgium
       expect(formatted[2]).toBe('2000 Antwerp');
       expect(formatted[3]).toBe('belgium');
     });
+
+    it('should remove falsy values from input', () => {
+      const formatted = addressFormatter.format({
+        city: 'Berlin',
+        countryCode: 'de',
+        country: 'Germany',
+        houseNumber: undefined,
+        postcode: 10999,
+        road: 'Glogauer Straße',
+      }, {
+        output: 'array',
+      },
+      );
+      expect(formatted.length).toBe(3);
+      expect(formatted[0]).toBe('Glogauer Straße');
+      expect(formatted[1]).toBe('10999 Berlin');
+      expect(formatted[2]).toBe('Germany');
+    });
   });
 });
