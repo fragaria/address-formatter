@@ -70,7 +70,9 @@ const normalizeComponentKeys = (input) => {
   for (let i = 0; i < inputKeys.length; i++) {
     const snaked = inputKeys[i].replace(/([A-Z])/g, '_$1').toLowerCase();
     if (knownComponents.indexOf(snaked) > -1 && !input[snaked]) {
-      input[snaked] = input[inputKeys[i]];
+      if (input[inputKeys[i]]) {
+        input[snaked] = input[inputKeys[i]];
+      }
       delete input[inputKeys[i]];
     }
   }
