@@ -288,9 +288,9 @@ describe('address-formatter', () => {
       expect(addressFormatter._findTemplate({ country_code: 'XX' })).toHaveProperty('fallback_template', `{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
-{{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} {{/first}}
-{{#first}} {{{city}}} || {{{town}}} || {{{village}}} {{/first}}
-{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} {{/first}}
+{{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
+{{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{municipality}}} {{/first}}
+{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} {{/first}}
 {{{country}}}
 `);
     });
@@ -318,7 +318,7 @@ describe('address-formatter', () => {
       )).toBe(`{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
-{{{postcode}}} {{#first}} {{{town}}} || {{{city}}} || {{{village}}} || || {{{county}}} || {{{state}}} {{/first}}
+{{{postcode}}} {{#first}} {{{postal_city}}} || {{{town}}} || {{{city}}} || {{{village}}} || {{{municipality}}} || {{{county}}} || {{{state}}} {{/first}}
 {{{country}}}
 `);
     });
@@ -330,9 +330,9 @@ describe('address-formatter', () => {
       )).toBe(`{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
-{{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} {{/first}}
-{{#first}} {{{city}}} || {{{town}}} || {{{village}}} {{/first}}
-{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} {{/first}}
+{{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
+{{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{municipality}}} {{/first}}
+{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} {{/first}}
 {{{country}}}
 `);
     });
