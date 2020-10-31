@@ -1,6 +1,5 @@
 # JS Address formatter
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/fragaria/address-formatter.svg)](https://greenkeeper.io/)
 [![Coverage Status](https://coveralls.io/repos/github/fragaria/address-formatter/badge.svg?branch=master)](https://coveralls.io/github/fragaria/address-formatter?branch=master)
 [![Build Status](https://travis-ci.org/fragaria/address-formatter.svg?branch=master)](https://travis-ci.org/fragaria/address-formatter)
 
