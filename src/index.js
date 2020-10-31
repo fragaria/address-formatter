@@ -263,6 +263,12 @@ const cleanupRender = (text) => {
     const result = [];
     for (let i = 0; i < inputChunks.length; i++) {
       const chunk = inputChunks[i].trim();
+      // Special casing New York here, no dedupe for it
+      if (chunk.toLowerCase() === 'new york') {
+        seen[chunk] = 1;
+        result.push(chunk);
+        continue;
+      }
       if (!seen[chunk]) {
         seen[chunk] = 1;
         result.push(modifier(chunk));
