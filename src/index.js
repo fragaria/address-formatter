@@ -96,7 +96,19 @@ const getStateCode = (state, countryCode) => {
   }
   // TODO what if state is actually the stateCode?
   // https://github.com/OpenCageData/perl-Geo-Address-Formatter/blob/master/lib/Geo/Address/Formatter.pm#L526
-  const found = stateCodes[countryCode].find((e) => e.name.toUpperCase() === state.toUpperCase());
+  const found = stateCodes[countryCode].find((e) => {
+    if (typeof e.name == 'string' && e.name.toUpperCase() === state.toUpperCase()) {
+      return e;
+    }
+    const variants = Object.values(e.name);
+    const foundVariant = variants.find((e) => e.toUpperCase() === state.toUpperCase());
+    if (foundVariant) {
+      return {
+        key: e.key,
+      };
+    }
+    return false;
+  });
   return found && found.key;
 };
 
@@ -105,7 +117,19 @@ const getCountyCode = (county, countryCode) => {
     return;
   }
   // TODO what if county is actually the countyCode?
-  const found = countyCodes[countryCode].find((e) => e.name.toUpperCase() === county.toUpperCase());
+  const found = countyCodes[countryCode].find((e) => {
+    if (typeof e.name == 'string' && e.name.toUpperCase() === county.toUpperCase()) {
+      return e;
+    }
+    const variants = Object.values(e.name);
+    const foundVariant = variants.find((e) => e.toUpperCase() === county.toUpperCase());
+    if (foundVariant) {
+      return {
+        key: e.key,
+      };
+    }
+    return false;
+  });
   return found && found.key;
 };
 
