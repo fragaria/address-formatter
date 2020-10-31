@@ -23,9 +23,12 @@ describe('testcases', () => {
             it(testCase.description || 'non-specific test case', () => {
               expect(addressFormatter.format(testCase.components)).toBe(testCase.expected);
             });
+            return true;
           });
         });
+        return true;
       });
     });
+    return true;
   });
 });
