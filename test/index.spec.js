@@ -319,6 +319,7 @@ describe('address-formatter', () => {
 {{{house}}}
 {{{road}}} {{{house_number}}}
 {{{postcode}}} {{#first}} {{{postal_city}}} || {{{town}}} || {{{city}}} || {{{village}}} || {{{municipality}}} || {{{county}}} || {{{state}}} {{/first}}
+{{{archipelago}}}
 {{{country}}}
 `);
     });
