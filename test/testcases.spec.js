@@ -11,7 +11,7 @@ if (!fs.existsSync(SRC_PATH)) {
 }
 
 function loadYaml (src) {
-  return yaml.safeLoadAll(fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8'));
+  return yaml.loadAll(fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8'));
 }
 
 describe('testcases', () => {

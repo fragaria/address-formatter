@@ -13,9 +13,9 @@ if (!fs.existsSync(SRC_PATH)) {
 function convert(src, dest, modifier, multiDoc) {
   let doc;
   if (multiDoc) {
-    doc = yaml.safeLoadAll(fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8'));
+    doc = yaml.loadAll(fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8'));
   } else {
-    doc = yaml.safeLoad(fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8'));
+    doc = yaml.load(fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8'));
   }
   fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(modifier(doc)));
 }
@@ -25,7 +25,7 @@ function convertAbbreviations(src, dest) {
   const result = {};
   for (let i = 0; i < list.length; i++) {
     const name = list[i].split('.')[0];
-    const loaded = yaml.safeLoad(fs.readFileSync(path.resolve(SRC_PATH, src, list[i]), 'utf8'));
+    const loaded = yaml.load(fs.readFileSync(path.resolve(SRC_PATH, src, list[i]), 'utf8'));
     result[name.toUpperCase()] = Object.keys(loaded).map((k) => {
       return {
         component: k,
@@ -43,7 +43,7 @@ function convertAbbreviations(src, dest) {
 
 function convertCountryCodes(src, dest) {
   const contents = fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8');
-  doc = yaml.safeLoad(contents.replace(/ \# /g, ' '));
+  doc = yaml.load(contents.replace(/ \# /g, ' '));
   fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(doc));
 }
 
