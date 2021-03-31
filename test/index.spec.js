@@ -590,5 +590,24 @@ Belgium
       expect(formatted[1]).toBe('10999 Berlin');
       expect(formatted[2]).toBe('Germany');
     });
+
+    it('should not clean postcode if option is set', () => {
+      const formatted = addressFormatter.format({
+        city: 'Berlin',
+        countryCode: 'de',
+        country: 'Germany',
+        houseNumber: undefined,
+        postcode: '10999,10999',
+        road: 'Glogauer Straße',
+      }, {
+        output: 'array',
+        cleanupPostcode: false,
+      },
+      );
+      expect(formatted.length).toBe(3);
+      expect(formatted[0]).toBe('Glogauer Straße');
+      expect(formatted[1]).toBe('10999,10999 Berlin');
+      expect(formatted[2]).toBe('Germany');
+    });
   });
 });

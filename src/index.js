@@ -179,7 +179,7 @@ const cleanupInput = (input, replacements = [], options = {}) => {
     input.attention = unknownComponents.map((c) => input[c]).join(', ');
   }
 
-  if (input.postcode) {
+  if (input.postcode && options.cleanupPostcode !== false) {
     // convert to string
     input.postcode = `${input.postcode}`;
     const multiCodeRegex = /^(\d{5}),\d{5}/;
@@ -322,6 +322,7 @@ module.exports = {
     abbreviate: false,
     output: 'string',
     appendCountry: false,
+    cleanupPostcode: true,
   }) => {
     let realInput = Object.assign({}, input);
     realInput = normalizeComponentKeys(realInput);
