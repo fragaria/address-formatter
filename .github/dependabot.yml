@@ -1,0 +1,43 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: eslint
+    versions:
+    - 7.22.0
+    - 7.24.0
+  - dependency-name: eslint-plugin-jest
+    versions:
+    - 24.1.9
+    - 24.2.0
+    - 24.3.1
+    - 24.3.3
+    - 24.3.5
+  - dependency-name: rollup
+    versions:
+    - 2.39.1
+    - 2.41.0
+    - 2.41.1
+    - 2.41.4
+    - 2.41.5
+    - 2.42.0
+    - 2.42.3
+    - 2.42.4
+    - 2.45.0
+    - 2.45.1
+  - dependency-name: "@babel/core"
+    versions:
+    - 7.13.1
+    - 7.13.15
+  - dependency-name: "@babel/preset-env"
+    versions:
+    - 7.13.5
+    - 7.13.9
+  - dependency-name: "@babel/plugin-proposal-object-rest-spread"
+    versions:
+    - 7.13.0
