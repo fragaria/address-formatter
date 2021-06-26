@@ -289,7 +289,7 @@ describe('address-formatter', () => {
 {{{house}}}
 {{{road}}} {{{house_number}}}
 {{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
-{{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{municipality}}} {{/first}}
+{{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{hamlet}}} || {{{municipality}}} {{/first}}
 {{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} {{/first}}
 {{{country}}}
 `);
@@ -318,7 +318,7 @@ describe('address-formatter', () => {
       )).toBe(`{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
-{{{postcode}}} {{#first}} {{{postal_city}}} || {{{town}}} || {{{city}}} || {{{village}}} || {{{municipality}}} || {{{county}}} || {{{state}}} {{/first}}
+{{{postcode}}} {{#first}} {{{postal_city}}} || {{{town}}} || {{{city}}} || {{{village}}} || {{{municipality}}} || {{{hamlet}}} || {{{county}}} || {{{state}}} {{/first}}
 {{{archipelago}}}
 {{{country}}}
 `);
@@ -332,7 +332,7 @@ describe('address-formatter', () => {
 {{{house}}}
 {{{road}}} {{{house_number}}}
 {{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
-{{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{municipality}}} {{/first}}
+{{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{hamlet}}} || {{{municipality}}} {{/first}}
 {{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} {{/first}}
 {{{country}}}
 `);
