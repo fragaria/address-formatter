@@ -173,6 +173,17 @@ $ npm run prepare-templates
 $ npm test
 ```
 
+### Making a release
+
+```sh
+$ npm version X.Y.Z
+$ git push origin master && git push origin vX.Y.Z
+```
+
+And the CI server takes care of the rest
+
+# Help needed
+
 All pull requests are definitely welcome. If an address
 is badly formatted, submit PRs directly to the 
 [original repository](https://github.com/OpenCageData/address-formatting/)
