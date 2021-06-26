@@ -10,7 +10,6 @@
     "test": "rimraf coverage && jest --coverage",
     "test:ci": "rimraf coverage && jest --coverage --ci",
     "test:watch": "jest --watch --coverage",
-    "coverage": "cat coverage/lcov.info | coveralls",
     "clean": "rimraf dist && rimraf src/templates/*.json",
     "pull-submodules": "git submodule init && git submodule update",
     "prepare-templates": "node management/prepare-templates.js",

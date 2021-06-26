@@ -26,5 +26,8 @@ jobs:
       - run: npm run prepare-templates
       - run: npm run lint
       - run: npm run test:ci
-      - run: npm run coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build --if-present
