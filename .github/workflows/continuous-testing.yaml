@@ -25,6 +25,6 @@ jobs:
       - run: npm run pull-submodules
       - run: npm run prepare-templates
       - run: npm run lint
-      - run: npm run test
+      - run: npm run test:ci
       - run: npm run coverage
       - run: npm run build --if-present
