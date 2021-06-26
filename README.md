@@ -1,7 +1,6 @@
 # JS Address formatter
 
 [![Coverage Status](https://coveralls.io/repos/github/fragaria/address-formatter/badge.svg?branch=master)](https://coveralls.io/github/fragaria/address-formatter?branch=master)
-[![Build Status](https://travis-ci.org/fragaria/address-formatter.svg?branch=master)](https://travis-ci.org/fragaria/address-formatter)
 
 Based on an amazing work of [OpenCage Data](https://github.com/OpenCageData/address-formatting/)
 who collected so many international formats of postal addresses, this is a Javascript implementation
