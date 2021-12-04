@@ -318,11 +318,12 @@ const renderTemplate = (template, input) => {
 
 module.exports = {
   format: (input, options = {
-    countryCode: undefined,
     abbreviate: false,
-    output: 'string',
     appendCountry: false,
     cleanupPostcode: true,
+    countryCode: undefined,
+    fallbackCountryCode: undefined,
+    output: 'string',
   }) => {
     let realInput = Object.assign({}, input);
     realInput = normalizeComponentKeys(realInput);
