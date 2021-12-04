@@ -17,3 +17,7 @@ docs
 address-formatting
 .gitignore
 .gitmodules
+rollup.config.js
+management
+src/templates/.gitkeep
+
