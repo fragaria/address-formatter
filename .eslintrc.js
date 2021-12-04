@@ -1,5 +1,5 @@
 module.exports = {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "rules": {
     "strict": [2, "global"],
 
