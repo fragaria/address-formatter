@@ -134,6 +134,13 @@ describe('address-formatter', () => {
       expect(converted).toHaveProperty('house_number', 123);
     });
 
+    it('should apply alias for a housenumber', () => {
+      const converted = addressFormatter.applyAliases({
+        housenumber: '1234',
+      }, [], { abbreviate: true });
+      expect(converted).toHaveProperty('house_number', '1234');
+    });
+
     it('should not overwrite aliases', () => {
       const converted = addressFormatter.applyAliases({
         street_number: 123,
