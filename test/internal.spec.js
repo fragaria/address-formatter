@@ -290,7 +290,7 @@ describe('address-formatter', () => {
 {{{road}}} {{{house_number}}}
 {{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
 {{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{hamlet}}} || {{{municipality}}} {{/first}}
-{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} {{/first}}
+{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} || {{{island}}}, {{{archipelago}}} {{/first}}
 {{{country}}}
 `);
     });
@@ -333,7 +333,7 @@ describe('address-formatter', () => {
 {{{road}}} {{{house_number}}}
 {{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
 {{#first}} {{{city}}} || {{{town}}} || {{{village}}} || {{{hamlet}}} || {{{municipality}}} {{/first}}
-{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} {{/first}}
+{{#first}} {{{county}}} || {{{state_district}}} || {{{state}}} || {{{region}}} || {{{island}}}, {{{archipelago}}} {{/first}}
 {{{country}}}
 `);
     });
