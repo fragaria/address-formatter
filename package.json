@@ -48,7 +48,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jest": "^25.2.1",
     "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^27.0.1",
     "js-yaml": "^4.0.0",
