@@ -12,7 +12,7 @@ describe('abbreviations', () => {
       postcode: '94303',
       county: 'Santa Clara County',
       state: 'California',
-      country: 'United States',
+      country: 'United States'
     }, { abbreviate: true })).toBe(`301 Hamilton Ave
 Palo Alto, CA 94303
 United States of America
@@ -29,7 +29,7 @@ United States of America
       postcode: '94303',
       county: 'Santa Clara County',
       state: 'California',
-      country: 'United States',
+      country: 'United States'
     }, { abbreviate: true })).toBe(`301 Northwestern University Rd
 Palo Alto, CA 94303
 United States of America
@@ -45,7 +45,7 @@ United States of America
       postcode: '94303',
       county: 'Santa Clara County',
       state: 'California',
-      country: 'United States',
+      country: 'United States'
     }, { abbreviate: true })).toBe(`301
 Palo Alto, CA 94303
 United States of America
@@ -61,7 +61,7 @@ United States of America
       postcode: 'V6K',
       road: 'Cornwall Avenue',
       state: 'British Columbia',
-      suburb: 'Kitsilano',
+      suburb: 'Kitsilano'
     }, { abbreviate: true })).toBe(`Cornwall Ave
 Vancouver, BC V6K
 Canada
@@ -80,7 +80,7 @@ Canada
       postcode: '08017',
       road: 'Carrer de Calatrava',
       state: 'Catalonia',
-      suburb: 'les Tres Torres',
+      suburb: 'les Tres Torres'
     }, { abbreviate: true })).toBe(`C Calatrava, 68
 08017 Barcelona
 Spain

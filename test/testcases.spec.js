@@ -1,7 +1,7 @@
-const path = require('path'),
-  fs = require('fs'),
-  yaml = require('js-yaml'),
-  addressFormatter = require('../src/index');
+const path = require('path');
+const fs = require('fs');
+const yaml = require('js-yaml');
+const addressFormatter = require('../src/index');
 
 const SRC_PATH = path.resolve(__dirname, '../address-formatting/testcases/');
 

@@ -15,7 +15,7 @@ describe('address-formatter', () => {
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       });
       expect(formatted).toBe(`Meat & Eat
 Vrijheidstraat 63
@@ -26,7 +26,7 @@ Belgium
 
     it('should work for a minimal example', () => {
       const formatted = addressFormatter.format({
-        road: 'Vrijheidstraat',
+        road: 'Vrijheidstraat'
       });
       expect(formatted).toBe(`Vrijheidstraat
 `);
@@ -44,10 +44,10 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       }, {
-        countryCode: 'US',
-      },
+        countryCode: 'US'
+      }
       );
       expect(formatted).toBe(`Meat & Eat
 63 Vrijheidstraat
@@ -68,7 +68,7 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       });
       expect(formatted).toBe(`Meat & Eat
 Vrijheidstraat 63
@@ -89,9 +89,9 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       }, {
-        fallbackCountryCode: 'US',
+        fallbackCountryCode: 'US'
       });
       expect(formattedWithFallback).toBe(`Meat & Eat
 63 Vrijheidstraat
@@ -109,9 +109,9 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       }, {
-        fallbackCountryCode: 'US',
+        fallbackCountryCode: 'US'
       });
       expect(formatted).toBe(`Meat & Eat
 Vrijheidstraat 63
@@ -132,11 +132,11 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       }, {
         countryCode: 'US',
-        output: 'array',
-      },
+        output: 'array'
+      }
       );
       expect(formatted.length).toBe(4);
       expect(formatted[0]).toBe('Meat & Eat');
@@ -156,11 +156,11 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       }, {
         output: 'array',
-        appendCountry: true,
-      },
+        appendCountry: true
+      }
       );
       expect(formatted.length).toBe(4);
       expect(formatted[0]).toBe('Meat & Eat');
@@ -181,11 +181,11 @@ Belgium
         postcode: 2000,
         restaurant: 'Meat & Eat',
         road: 'Vrijheidstraat',
-        state: 'Flanders',
+        state: 'Flanders'
       }, {
         output: 'array',
-        appendCountry: true,
-      },
+        appendCountry: true
+      }
       );
       expect(formatted.length).toBe(4);
       expect(formatted[0]).toBe('Meat & Eat');
@@ -201,10 +201,10 @@ Belgium
         country: 'Germany',
         houseNumber: undefined,
         postcode: 10999,
-        road: 'Glogauer Straße',
+        road: 'Glogauer Straße'
       }, {
-        output: 'array',
-      },
+        output: 'array'
+      }
       );
       expect(formatted.length).toBe(3);
       expect(formatted[0]).toBe('Glogauer Straße');
@@ -219,11 +219,11 @@ Belgium
         country: 'Germany',
         houseNumber: undefined,
         postcode: '10999,10999',
-        road: 'Glogauer Straße',
+        road: 'Glogauer Straße'
       }, {
         output: 'array',
-        cleanupPostcode: false,
-      },
+        cleanupPostcode: false
+      }
       );
       expect(formatted.length).toBe(3);
       expect(formatted[0]).toBe('Glogauer Straße');
