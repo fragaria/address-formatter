@@ -21,6 +21,7 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
+      - run: npm install -g eslint
       - run: npm ci
       - run: npm run pull-submodules
       - run: npm run prepare-templates
