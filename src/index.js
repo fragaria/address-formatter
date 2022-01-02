@@ -8,7 +8,7 @@ module.exports = {
     cleanupPostcode: true,
     countryCode: undefined,
     fallbackCountryCode: undefined,
-    output: 'string',
+    output: 'string'
   }) => {
     let realInput = Object.assign({}, input);
     realInput = internal.normalizeComponentKeys(realInput);
@@ -28,5 +28,5 @@ module.exports = {
       return result.split('\n').filter((f) => !!f);
     }
     return result;
-  },
+  }
 };

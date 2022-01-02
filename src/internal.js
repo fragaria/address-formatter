@@ -45,7 +45,7 @@ const determineCountryCode = (input, fallbackCountryCode = null) => {
       }
     }
   }
-  
+
   if (countryCode === 'NL' && input.state) {
     if (input.state === 'Curaçao') {
       countryCode = 'CW';
@@ -96,14 +96,14 @@ const getStateCode = (state, countryCode) => {
   // TODO what if state is actually the stateCode?
   // https://github.com/OpenCageData/perl-Geo-Address-Formatter/blob/master/lib/Geo/Address/Formatter.pm#L526
   const found = stateCodes[countryCode].find((e) => {
-    if (typeof e.name == 'string' && e.name.toUpperCase() === state.toUpperCase()) {
+    if (typeof e.name === 'string' && e.name.toUpperCase() === state.toUpperCase()) {
       return e;
     }
     const variants = Object.values(e.name);
     const foundVariant = variants.find((e) => e.toUpperCase() === state.toUpperCase());
     if (foundVariant) {
       return {
-        key: e.key,
+        key: e.key
       };
     }
     return false;
@@ -117,14 +117,14 @@ const getCountyCode = (county, countryCode) => {
   }
   // TODO what if county is actually the countyCode?
   const found = countyCodes[countryCode].find((e) => {
-    if (typeof e.name == 'string' && e.name.toUpperCase() === county.toUpperCase()) {
+    if (typeof e.name === 'string' && e.name.toUpperCase() === county.toUpperCase()) {
       return e;
     }
     const variants = Object.values(e.name);
     const foundVariant = variants.find((e) => e.toUpperCase() === county.toUpperCase());
     if (foundVariant) {
       return {
-        key: e.key,
+        key: e.key
       };
     }
     return false;
@@ -202,7 +202,7 @@ const cleanupInput = (input, replacements = [], options = {}) => {
             for (let k = 0; k < abbreviations[lang][j].replacements.length; k++) {
               input[abbreviations[lang][j].component] = input[abbreviations[lang][j].component].replace(
                 new RegExp(`\\b${abbreviations[lang][j].replacements[k].src}\\b`),
-                abbreviations[lang][j].replacements[k].dest,
+                abbreviations[lang][j].replacements[k].dest
               );
             }
           }
@@ -210,7 +210,7 @@ const cleanupInput = (input, replacements = [], options = {}) => {
       }
     }
   }
-  
+
   // naive url cleanup, keys might have changed along the cleanup
   inputKeys = Object.keys(input);
   for (let i = 0; i < inputKeys.length; i++) {
@@ -255,7 +255,7 @@ const cleanupRender = (text) => {
     { s: /,,+/u, d: ',' }, // multiple commas to one
     { s: /,\n/u, d: '\n' }, // comma newline to just newline
     { s: /\n[ \t]+/u, d: '\n' }, // newline plus space to newline
-    { s: /\n\n+/u, d: '\n' }, // multiple newline to one
+    { s: /\n\n+/u, d: '\n' } // multiple newline to one
   ];
   const dedupe = (inputChunks, glue, modifier = (s) => s) => {
     const seen = {};
@@ -294,7 +294,7 @@ const renderTemplate = (template, input) => {
           .filter((b) => b.length > 0);
         return possibilities.length ? possibilities[0] : '';
       };
-    },
+    }
   });
 
   let render = cleanupRender(Mustache.render(templateText, templateInput));
@@ -325,5 +325,5 @@ module.exports = {
   findTemplate,
   chooseTemplateText,
   cleanupRender,
-  renderTemplate,
+  renderTemplate
 };
