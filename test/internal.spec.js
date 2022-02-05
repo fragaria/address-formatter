@@ -148,6 +148,23 @@ describe('address-formatter', () => {
       });
       expect(converted).toHaveProperty('house_number', 456);
     });
+
+    it('should not use special state_district alias for some countries', () => {
+      const converted = addressFormatter.applyAliases({
+        country_code: 'br',
+        neighbourhood: 123,
+      });
+      expect(converted).not.toHaveProperty('district');
+      expect(converted).not.toHaveProperty('state_district');
+    });
+
+    it('should use special state_district alias for some countries', () => {
+      const converted = addressFormatter.applyAliases({
+        district: 123,
+      });
+      expect(converted).toHaveProperty('state_district', 123);
+      expect(converted).toHaveProperty('district', 123);
+    });
   });
 
   describe('getStateCode', () => {

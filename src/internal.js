@@ -8,6 +8,17 @@ const abbreviations = require('./templates/abbreviations.json');
 
 const knownComponents = aliases.map((a) => a.alias);
 const VALID_REPLACEMENT_COMPONENTS = ['state'];
+const SMALL_DISTRICT_COUNTRIES = {
+  'BR': 1,
+  'CR': 1,
+  'ES': 1,
+  'NI': 1,
+  'PY': 1,
+  'RO': 1,
+  'TG': 1,
+  'TM': 1,
+  'XK': 1,
+}
 
 const determineCountryCode = (input, fallbackCountryCode = null) => {
   let countryCode = input.country_code && input.country_code.toUpperCase();
@@ -80,8 +91,14 @@ const normalizeComponentKeys = (input) => {
 
 const applyAliases = (input) => {
   const inputKeys = Object.keys(input);
+  let tailoredAliases = aliases;
+  if (! SMALL_DISTRICT_COUNTRIES[input.country_code]) {
+    tailoredAliases = aliases.filter((a) => a.alias !== 'district');
+    tailoredAliases.push({alias: 'district', name: 'state_district'});
+  }
+
   for (let i = 0; i < inputKeys.length; i++) {
-    const alias = aliases.find((a) => a.alias === inputKeys[i]);
+    const alias = tailoredAliases.find((a) => a.alias === inputKeys[i]);
     if (alias && !input[alias.name]) {
       input[alias.name] = input[alias.alias];
     }
