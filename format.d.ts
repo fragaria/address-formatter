@@ -1,20 +1,17 @@
 type Format=FormatToArray|FormatToString
 
-type FormatToArray=(input: object, options?: {
+type  options={
     abbreviate?: boolean;
     appendCountry?: boolean;
     cleanupPostcode?: boolean;
     countryCode?: string;
     fallbackCountryCode?: string;
-    output?: 'array';
+}
+type FormatToArray=(input: object, options?: options &{
+    output?: 'array'
 })=>  string[];
 
-type FormatToString=(input: object, options?: {
-    abbreviate?: boolean;
-    appendCountry?: boolean;
-    cleanupPostcode?: boolean;
-    countryCode?: string;
-    fallbackCountryCode?: string;
+type FormatToString=(input: object, options?: options & {
     output?: 'string';
 })=>  string;
 
