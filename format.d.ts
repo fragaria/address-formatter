@@ -1,19 +1,19 @@
-type Format=FormatToArray|FormatToString
+type Format = FormatToArray | FormatToString
 
-type  options={
+type  options = {
     abbreviate?: boolean;
     appendCountry?: boolean;
     cleanupPostcode?: boolean;
     countryCode?: string;
     fallbackCountryCode?: string;
 }
-type FormatToArray=(input: object, options?: options &{
+type FormatToArray = (input: object, options?: options & {
     output?: 'array'
-})=>  string[];
+}) => string[];
 
-type FormatToString=(input: object, options?: options & {
+type FormatToString = (input: object, options?: options & {
     output?: 'string';
-})=>  string;
+}) => string;
 
 
 declare let format: Format;
