@@ -44,7 +44,7 @@
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.1.2",
-    "babel-jest": "^27.4.1",
+    "babel-jest": "^28.0.2",
     "babel-loader": "^8.2.3",
     "coveralls": "^3.0.9",
     "eslint": "^8.6.0",
