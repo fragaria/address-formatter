@@ -48,7 +48,7 @@
     "babel-loader": "^8.2.3",
     "coveralls": "^3.0.9",
     "eslint": "^8.6.0",
-    "jest": "^27.0.1",
+    "jest": "^28.0.3",
     "js-yaml": "^4.0.0",
     "rimraf": "^3.0.0",
     "rollup": "^2.0.0",
