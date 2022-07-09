@@ -15,6 +15,7 @@
     "clean": "rimraf dist && rimraf src/templates/*.json",
     "pull-submodules": "git submodule init && git submodule update",
     "prepare-templates": "node management/prepare-templates.js",
+    "collect-aliases": "node management/collect-aliases.js",
     "build": "rollup -c rollup.config.js"
   },
   "publishConfig": {
