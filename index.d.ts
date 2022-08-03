@@ -1,3 +1,5 @@
+type AttentionInputType = 'attention';
+
 type PrimaryInputTypes =
   | 'archipelago'
   | 'city'
@@ -63,7 +65,7 @@ type AliasInputTypes =
   | 'township'
   | 'ward';
 
-type Input = Partial<Record<PrimaryInputTypes | AliasInputTypes, string>>;
+type Input = Partial<Record<AttentionInputType | PrimaryInputTypes | AliasInputTypes, string>>;
 
 interface CommonOptions {
   abbreviate?: boolean;
