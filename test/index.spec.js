@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const addressFormatter = require('../src/index');
+import { addressFormatter } from '../src/index';
 
 describe('address-formatter', () => {
   describe('format', () => {

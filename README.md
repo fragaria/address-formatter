@@ -29,7 +29,8 @@ npm i @fragaria/address-formatter
 ```
 
 ```js
-const addressFormatter = require('@fragaria/address-formatter');
+// import addressFormatter from '@fragaria/address-formatter';
+const { addressFormatter } = require('@fragaria/address-formatter');
 
 // Basic examples
 const formatted = addressFormatter.format({
@@ -109,7 +110,7 @@ USA
 */
 
 // You can get the address as a list of lines to make your formatting easier
-const formatted = addressFormatter.format({
+const formattedAsLines = addressFormatter.format({
   "houseNumber": 301,
   "road": "Hamilton Avenue",
   "neighbourhood": "Crescent Park",

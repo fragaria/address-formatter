@@ -1,10 +1,10 @@
-const Mustache = require('mustache');
-const templates = require('./templates/templates.json');
-const aliases = require('./templates/aliases.json');
-const stateCodes = require('./templates/state-codes.json');
-const countyCodes = require('./templates/county-codes.json');
-const country2lang = require('./templates/country-to-lang.json');
-const abbreviations = require('./templates/abbreviations.json');
+import Mustache from 'mustache';
+import templates from'./templates/templates.json';
+import aliases from './templates/aliases.json';
+import stateCodes from './templates/state-codes.json';
+import countyCodes from './templates/county-codes.json';
+import country2lang from './templates/country-to-lang.json';
+import abbreviations from './templates/abbreviations.json';
 
 const knownComponents = aliases.map((a) => a.alias);
 const VALID_REPLACEMENT_COMPONENTS = ['state'];
@@ -20,7 +20,7 @@ const SMALL_DISTRICT_COUNTRIES = {
   XK: 1
 };
 
-const determineCountryCode = (input, fallbackCountryCode = null) => {
+export const determineCountryCode = (input, fallbackCountryCode = null) => {
   let countryCode = input.country_code && input.country_code.toUpperCase();
   if (!templates[countryCode] && fallbackCountryCode) {
     countryCode = fallbackCountryCode.toUpperCase();
@@ -75,7 +75,7 @@ const determineCountryCode = (input, fallbackCountryCode = null) => {
   return input;
 };
 
-const normalizeComponentKeys = (input) => {
+export const normalizeComponentKeys = (input) => {
   const inputKeys = Object.keys(input);
   for (let i = 0; i < inputKeys.length; i++) {
     const snaked = inputKeys[i].replace(/([A-Z])/g, '_$1').toLowerCase();
@@ -89,7 +89,7 @@ const normalizeComponentKeys = (input) => {
   return input;
 };
 
-const applyAliases = (input) => {
+export const applyAliases = (input) => {
   const inputKeys = Object.keys(input);
   let tailoredAliases = aliases;
   if (!SMALL_DISTRICT_COUNTRIES[input.country_code]) {
@@ -106,7 +106,7 @@ const applyAliases = (input) => {
   return input;
 };
 
-const getStateCode = (state, countryCode) => {
+export const getStateCode = (state, countryCode) => {
   if (!stateCodes[countryCode]) {
     return;
   }
@@ -128,7 +128,7 @@ const getStateCode = (state, countryCode) => {
   return found && found.key;
 };
 
-const getCountyCode = (county, countryCode) => {
+export const getCountyCode = (county, countryCode) => {
   if (!countyCodes[countryCode]) {
     return;
   }
@@ -149,7 +149,7 @@ const getCountyCode = (county, countryCode) => {
   return found && found.key;
 };
 
-const cleanupInput = (input, replacements = [], options = {}) => {
+export const cleanupInput = (input, replacements = [], options = {}) => {
   // If the country is a number, use the state as country
   let inputKeys = Object.keys(input);
   if (input.country && input.state && Number.isInteger(input.country)) {
@@ -239,11 +239,11 @@ const cleanupInput = (input, replacements = [], options = {}) => {
   return input;
 };
 
-const findTemplate = (input) => {
+export const findTemplate = (input) => {
   return templates[input.country_code] ? templates[input.country_code] : templates.default;
 };
 
-const chooseTemplateText = (template, input) => {
+export const chooseTemplateText = (template, input) => {
   let selected = template.address_template || templates.default.address_template;
   const threshold = 2;
   // Choose fallback only when none of these is present
@@ -258,7 +258,7 @@ const chooseTemplateText = (template, input) => {
   return selected;
 };
 
-const cleanupRender = (text) => {
+export const cleanupRender = (text) => {
   const replacements = [
     // eslint-disable-next-line no-useless-escape
     { s: /[\},\s]+$/u, d: '' },
@@ -301,7 +301,7 @@ const cleanupRender = (text) => {
   return text.trim();
 };
 
-const renderTemplate = (template, input) => {
+export const renderTemplate = (template, input) => {
   const templateText = chooseTemplateText(template, input);
   const templateInput = Object.assign({}, input, {
     first: () => {
@@ -330,17 +330,4 @@ const renderTemplate = (template, input) => {
   }
 
   return render + '\n';
-};
-
-module.exports = {
-  determineCountryCode,
-  normalizeComponentKeys,
-  applyAliases,
-  getStateCode,
-  getCountyCode,
-  cleanupInput,
-  findTemplate,
-  chooseTemplateText,
-  cleanupRender,
-  renderTemplate
 };

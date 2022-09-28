@@ -1,7 +1,7 @@
-const internal = require('./internal.js');
-const countryNames = require('./templates/country-names.json');
+import * as internal from './internal.js';
+import * as countryNames from './templates/country-names.json';
 
-module.exports = {
+export const addressFormatter = {
   format: (input, options = {
     abbreviate: false,
     appendCountry: false,

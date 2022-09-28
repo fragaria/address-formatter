@@ -1,40 +1,40 @@
 /* eslint-disable camelcase */
-const addressFormatter = require('../src/internal');
+import * as addressFormatterInternals from '../src/internal';
 
 describe('address-formatter', () => {
   describe('determineCountryCode', () => {
     it('should put country code to uppercase', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'cz'
       });
       expect(converted).toHaveProperty('country_code', 'CZ');
     });
 
     it('should not modify strange input', () => {
-      let converted = addressFormatter.determineCountryCode({
+      let converted = addressFormatterInternals.determineCountryCode({
         country_code: 'czx'
       });
       expect(converted).toHaveProperty('country_code', 'czx');
-      converted = addressFormatter.determineCountryCode({});
+      converted = addressFormatterInternals.determineCountryCode({});
       expect(converted).not.toHaveProperty('country_code');
     });
 
     it('should convert UK country_code to GB', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'UK'
       });
       expect(converted).toHaveProperty('country_code', 'GB');
     });
 
     it('should apply use_country', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'LI'
       });
       expect(converted).toHaveProperty('country_code', 'CH');
     });
 
     it('should apply change_country', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'MF',
         country: 'Collectivité de Saint-Martin'
       });
@@ -43,7 +43,7 @@ describe('address-formatter', () => {
     });
 
     it('should replace component name if that is present', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country: 'Saint Helena, Ascension and Tristan da Cunha',
         country_code: 'sh',
         state: 'Saint Helena'
@@ -52,7 +52,7 @@ describe('address-formatter', () => {
     });
 
     it('should replace component name if that is not present', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country: 'Saint Helena, Ascension and Tristan da Cunha',
         country_code: 'sh'
       });
@@ -60,14 +60,14 @@ describe('address-formatter', () => {
     });
 
     it('should add component', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'MH'
       });
       expect(converted).toHaveProperty('country_code', 'US');
       expect(converted).toHaveProperty('state', 'Marshall Islands'); // sic
     });
     it('should convert Sint Maarten to SX country code', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'NL',
         state: 'Sint Maarten'
       });
@@ -75,7 +75,7 @@ describe('address-formatter', () => {
     });
 
     it('should convert Curaçao to CW country code', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'NL',
         state: 'Curaçao'
       });
@@ -83,7 +83,7 @@ describe('address-formatter', () => {
     });
 
     it('should convert Aruba to AW country code', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'NL',
         state: 'Aruba'
       });
@@ -91,7 +91,7 @@ describe('address-formatter', () => {
     });
 
     it('should do nothing for NL if no special case is met', () => {
-      const converted = addressFormatter.determineCountryCode({
+      const converted = addressFormatterInternals.determineCountryCode({
         country_code: 'NL',
         state: 'Not A-ruba'
       });
@@ -118,7 +118,7 @@ describe('address-formatter', () => {
       ];
 
       for (let i = 0; i < mapping.length; i++) {
-        const converted = addressFormatter.normalizeComponentKeys({ [mapping[i][0]]: 'string' });
+        const converted = addressFormatterInternals.normalizeComponentKeys({ [mapping[i][0]]: 'string' });
         expect(converted).toHaveProperty(mapping[i][1]);
         expect(converted).not.toHaveProperty(mapping[i][0]);
         expect(converted).not.toHaveProperty('attention');
@@ -128,21 +128,21 @@ describe('address-formatter', () => {
 
   describe('applyAliases', () => {
     it('should apply aliases', () => {
-      const converted = addressFormatter.applyAliases({
+      const converted = addressFormatterInternals.applyAliases({
         street_number: 123
       });
       expect(converted).toHaveProperty('house_number', 123);
     });
 
     it('should apply alias for a housenumber', () => {
-      const converted = addressFormatter.applyAliases({
+      const converted = addressFormatterInternals.applyAliases({
         housenumber: '1234'
       }, [], { abbreviate: true });
       expect(converted).toHaveProperty('house_number', '1234');
     });
 
     it('should not overwrite aliases', () => {
-      const converted = addressFormatter.applyAliases({
+      const converted = addressFormatterInternals.applyAliases({
         street_number: 123,
         house_number: 456
       });
@@ -150,7 +150,7 @@ describe('address-formatter', () => {
     });
 
     it('should not use special state_district alias for some countries', () => {
-      const converted = addressFormatter.applyAliases({
+      const converted = addressFormatterInternals.applyAliases({
         country_code: 'br',
         neighbourhood: 123
       });
@@ -159,7 +159,7 @@ describe('address-formatter', () => {
     });
 
     it('should use special state_district alias for some countries', () => {
-      const converted = addressFormatter.applyAliases({
+      const converted = addressFormatterInternals.applyAliases({
         district: 123
       });
       expect(converted).toHaveProperty('state_district', 123);
@@ -169,35 +169,35 @@ describe('address-formatter', () => {
 
   describe('getStateCode', () => {
     it('should return state code', () => {
-      expect(addressFormatter.getStateCode('Alabama', 'US')).toBe('AL');
+      expect(addressFormatterInternals.getStateCode('Alabama', 'US')).toBe('AL');
     });
 
     it('should return nothing when country has no state codes', () => {
-      expect(addressFormatter.getStateCode('Pardubice', 'CZ')).toBe(undefined);
+      expect(addressFormatterInternals.getStateCode('Pardubice', 'CZ')).toBe(undefined);
     });
 
     it('should return nothing when state is not found', () => {
-      expect(addressFormatter.getStateCode('Husky', 'US')).toBe(undefined);
+      expect(addressFormatterInternals.getStateCode('Husky', 'US')).toBe(undefined);
     });
   });
 
   describe('getCountyCode', () => {
     it('should return county code', () => {
-      expect(addressFormatter.getCountyCode('Alessandria', 'IT')).toBe('AL');
+      expect(addressFormatterInternals.getCountyCode('Alessandria', 'IT')).toBe('AL');
     });
 
     it('should return nothing when country has no county codes', () => {
-      expect(addressFormatter.getCountyCode('Pardubice', 'CZ')).toBe(undefined);
+      expect(addressFormatterInternals.getCountyCode('Pardubice', 'CZ')).toBe(undefined);
     });
 
     it('should return nothing when county is not found', () => {
-      expect(addressFormatter.getCountyCode('Calcio', 'IT')).toBe(undefined);
+      expect(addressFormatterInternals.getCountyCode('Calcio', 'IT')).toBe(undefined);
     });
   });
 
   describe('cleanupInput', () => {
     it('should replace country with state if country is numeric', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         country: 123,
         state: 'Slovakia'
       });
@@ -205,7 +205,7 @@ describe('address-formatter', () => {
     });
 
     it('should determine state code from state if possible', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         state: 'Alabama',
         country_code: 'US'
       });
@@ -213,7 +213,7 @@ describe('address-formatter', () => {
     });
 
     it('should cleanup for Washington D.C.', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         state: 'Washington D.C.',
         country_code: 'US'
       });
@@ -223,7 +223,7 @@ describe('address-formatter', () => {
     });
 
     it('should determine county code from county if possible', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         county: 'Alessandria',
         country_code: 'IT'
       });
@@ -231,7 +231,7 @@ describe('address-formatter', () => {
     });
 
     it('should put together attention from unknown components', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         pub: 'Pub',
         name: 'Henry',
         country_code: 'IT'
@@ -240,35 +240,35 @@ describe('address-formatter', () => {
     });
 
     it('should drop lengthy post codes', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         postcode: 'abcdefghijklmnopqrstuvwxyz'
       });
       expect(converted).not.toHaveProperty('postcode');
     });
 
     it('should drop post codes separated by ;', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         postcode: '1234;5678'
       });
       expect(converted).not.toHaveProperty('postcode');
     });
 
     it('should pick the first from post codes separated by ,', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         postcode: '12345,56789'
       });
       expect(converted).toHaveProperty('postcode', '12345');
     });
 
     it('should convert postcode to a string', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         postcode: 123456
       });
       expect(converted).toHaveProperty('postcode', '123456');
     });
 
     it('should drop anything that looks like url', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         pub: 'http://google.com',
         street: 'https://google.com'
       });
@@ -277,7 +277,7 @@ describe('address-formatter', () => {
     });
 
     it('should apply replacements', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         stadt: 'Stadtteil Hamburg',
         city: 'Alt-Berlin',
         place: 'Alt-Berlin',
@@ -294,7 +294,7 @@ describe('address-formatter', () => {
     });
 
     it('should apply abbreviations', () => {
-      const converted = addressFormatter.cleanupInput({
+      const converted = addressFormatterInternals.cleanupInput({
         stadt: 'Stadtteil Hamburg',
         city: 'Alt-Berlin',
         place: 'Alt-Berlin',
@@ -306,10 +306,10 @@ describe('address-formatter', () => {
 
   describe('findTemplate', () => {
     it('should pick country template', () => {
-      expect(addressFormatter.findTemplate({ country_code: 'DO' })).toHaveProperty('postformat_replace.length', 1);
+      expect(addressFormatterInternals.findTemplate({ country_code: 'DO' })).toHaveProperty('postformat_replace.length', 1);
     });
     it('should fallback to default', () => {
-      expect(addressFormatter.findTemplate({ country_code: 'XX' })).toHaveProperty('fallback_template', `{{{attention}}}
+      expect(addressFormatterInternals.findTemplate({ country_code: 'XX' })).toHaveProperty('fallback_template', `{{{attention}}}
 {{{house}}}
 {{{road}}} {{{house_number}}}
 {{#first}} {{{suburb}}} || {{{city_district}}} || {{{neighbourhood}}} || {{{island}}} {{/first}}
@@ -322,21 +322,21 @@ describe('address-formatter', () => {
 
   describe('chooseTemplateText', () => {
     it('should use country address_template', () => {
-      expect(addressFormatter.chooseTemplateText(
+      expect(addressFormatterInternals.chooseTemplateText(
         { address_template: 'aa' },
         { road: 'aa', postcode: 123 }
       )).toBe('aa');
     });
 
     it('should use country fallback_template if not enough data is provided', () => {
-      expect(addressFormatter.chooseTemplateText(
+      expect(addressFormatterInternals.chooseTemplateText(
         { address_template: 'aa', fallback_template: 'fallback' },
         { }
       )).toBe('fallback');
     });
 
     it('should use default address_template if template does not have address_template', () => {
-      expect(addressFormatter.chooseTemplateText(
+      expect(addressFormatterInternals.chooseTemplateText(
         { },
         { road: 'aa', postcode: 123 }
       )).toBe(`{{{attention}}}
@@ -349,7 +349,7 @@ describe('address-formatter', () => {
     });
 
     it('should use default fallback_template if not enough data is provided and template does not have fallback_template', () => {
-      expect(addressFormatter.chooseTemplateText(
+      expect(addressFormatterInternals.chooseTemplateText(
         { },
         { }
       )).toBe(`{{{attention}}}
@@ -365,7 +365,7 @@ describe('address-formatter', () => {
 
   describe('renderTemplate', () => {
     it('should render the appropriate template', () => {
-      const render = addressFormatter.renderTemplate(
+      const render = addressFormatterInternals.renderTemplate(
         {},
         { road: 'House' }
       );
@@ -374,7 +374,7 @@ describe('address-formatter', () => {
     });
 
     it('should properly apply first modifier in a template', () => {
-      const render = addressFormatter.renderTemplate(
+      const render = addressFormatterInternals.renderTemplate(
         {},
         { city: 'City', village: 'Village' }
       );
@@ -383,7 +383,7 @@ describe('address-formatter', () => {
     });
 
     it('should apply postformat_replace', () => {
-      const render = addressFormatter.renderTemplate(
+      const render = addressFormatterInternals.renderTemplate(
         {
           postformat_replace: [
             ['^House', 'Building']
@@ -396,7 +396,7 @@ describe('address-formatter', () => {
     });
 
     it('should fallback to concatenation with empty output', () => {
-      const render = addressFormatter.renderTemplate(
+      const render = addressFormatterInternals.renderTemplate(
         { fallback_template: '' },
         { pub: 'House' }
       );

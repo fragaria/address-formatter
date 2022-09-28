@@ -1,7 +1,7 @@
-const path = require('path');
-const fs = require('fs');
-const yaml = require('js-yaml');
-const addressFormatter = require('../src/index');
+import * as path from 'path';
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
+import { addressFormatter } from '../src/index';
 
 const SRC_PATH = path.resolve(__dirname, '../address-formatting/testcases/');
 
