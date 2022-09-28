@@ -1,5 +1,5 @@
 import Mustache from 'mustache';
-import templates from'./templates/templates.json';
+import templates from './templates/templates.json';
 import aliases from './templates/aliases.json';
 import stateCodes from './templates/state-codes.json';
 import countyCodes from './templates/county-codes.json';
