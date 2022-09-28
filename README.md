@@ -135,9 +135,9 @@ const formattedAsLines = addressFormatter.format({
 ### Direct use on webpage
 
 ```html
-<script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@1.0.0"></script>
+<script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@4.0.1"></script>
 <script type="text/javascript">
-  const formatted = window.addressFormatter.format({
+  const formatted = window.addressFormatter.addressFormatter.format({
     "houseNumber": 301,
     "road": "Hamilton Avenue",
     "neighbourhood": "Crescent Park",
