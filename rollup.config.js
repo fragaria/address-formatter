@@ -14,7 +14,7 @@ export default [
       file: pkg.browser,
       format: 'umd',
       sourcemap: true,
-      exports: 'named'
+      exports: 'default'
     },
     plugins: [
       json(),
@@ -29,8 +29,8 @@ export default [
   {
     input: 'src/index.js',
     output: [
-      { file: pkg.main, format: 'cjs', exports: 'named' },
-      { file: pkg.module, format: 'es', exports: 'named' },
+      { file: pkg.main, format: 'cjs', exports: 'default' },
+      { file: pkg.module, format: 'es', exports: 'default' },
     ],
     plugins: [
       json(),

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { addressFormatter } from '../src/index';
+import addressFormatter from '../src/index';
 
 describe('abbreviations', () => {
   it('should abbrev US avenue', () => {
