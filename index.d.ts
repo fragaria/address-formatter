@@ -67,20 +67,24 @@ type AliasInputTypes =
 
 type Input = Partial<Record<AttentionInputType | PrimaryInputTypes | AliasInputTypes, string>>;
 
-interface CommonOptions {
-  abbreviate?: boolean;
-  appendCountry?: boolean;
-  cleanupPostcode?: boolean;
-  countryCode?: string;
-  fallbackCountryCode?: string;
+export namespace addressFormatter {
+
+    interface CommonOptions {
+    abbreviate?: boolean;
+    appendCountry?: boolean;
+    cleanupPostcode?: boolean;
+    countryCode?: string;
+    fallbackCountryCode?: string;
+    }
+
+    export function format(
+    input: Input,
+    options?: CommonOptions & {output?: 'string'},
+    ): string;
+
+    export function format(
+    input: Input,
+    options: CommonOptions & {output: 'array'},
+    ): string[];
+
 }
-
-export function format(
-  input: Input,
-  options?: CommonOptions & {output?: 'string'},
-): string;
-
-export function format(
-  input: Input,
-  options: CommonOptions & {output: 'array'},
-): string[];
