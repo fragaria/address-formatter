@@ -1,6 +1,6 @@
 {
   "name": "@fragaria/address-formatter",
-  "version": "4.0.2",
+  "version": "5.0.0",
   "description": "Universal international address formatting in Javascript",
   "main": "dist/cjs/address-formatter.js",
   "types": "index.d.ts",
