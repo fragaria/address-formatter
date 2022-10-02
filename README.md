@@ -30,7 +30,7 @@ npm i @fragaria/address-formatter
 
 ```js
 // import addressFormatter from '@fragaria/address-formatter';
-const { addressFormatter } = require('@fragaria/address-formatter');
+const addressFormatter = require('@fragaria/address-formatter');
 
 // Basic examples
 const formatted = addressFormatter.format({
@@ -137,7 +137,7 @@ const formattedAsLines = addressFormatter.format({
 ```html
 <script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@4.0.1"></script>
 <script type="text/javascript">
-  const formatted = window.addressFormatter.addressFormatter.format({
+  const formatted = window.addressFormatter.format({
     "houseNumber": 301,
     "road": "Hamilton Avenue",
     "neighbourhood": "Crescent Park",

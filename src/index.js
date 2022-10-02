@@ -1,7 +1,7 @@
 import * as internal from './internal.js';
 import * as countryNames from './templates/country-names.json';
 
-export const addressFormatter = {
+const addressFormatter = {
   format: (input, options = {
     abbreviate: false,
     appendCountry: false,
@@ -30,3 +30,4 @@ export const addressFormatter = {
     return result;
   }
 };
+export default addressFormatter;
