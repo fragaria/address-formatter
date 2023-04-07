@@ -162,8 +162,9 @@ export const cleanupInput = (input, replacements = [], options = {}) => {
         const componentRegex = new RegExp(`^${inputKeys[i]}=`);
         if (replacements[j][0].match(componentRegex)) {
           const val = replacements[j][0].replace(componentRegex, '');
-          if (input[inputKeys[i]] === val) {
-            input[inputKeys[i]] = replacements[j][1];
+          const valRegex = new RegExp(val);
+          if (input[inputKeys[i]].match(valRegex)) {
+            input[inputKeys[i]] = input[inputKeys[i]].replace(valRegex, replacements[j][1]);
           }
         } else {
           input[inputKeys[i]] = `${input[inputKeys[i]]}`.replace(new RegExp(replacements[j][0]), replacements[j][1]);
