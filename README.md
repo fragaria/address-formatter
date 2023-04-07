@@ -135,7 +135,7 @@ const formattedAsLines = addressFormatter.format({
 ### Direct use on webpage
 
 ```html
-<script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@5.0.0"></script>
+<script type="text/javascript" src="https://unpkg.com/@fragaria/address-formatter@latest"></script>
 <script type="text/javascript">
   const formatted = window.addressFormatter.format({
     "houseNumber": 301,
