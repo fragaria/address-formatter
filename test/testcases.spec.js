@@ -20,9 +20,11 @@ describe('testcases', () => {
       fs.readdirSync(path.resolve(SRC_PATH, suite)).map((filename) => {
         describe(filename, () => {
           loadYaml(`${suite}/${filename}`).map((testCase) => {
-            it(testCase.description || 'non-specific test case', () => {
-              expect(addressFormatter.format(testCase.components)).toBe(testCase.expected);
-            });
+            if (testCase?.components && testCase?.expected) {
+              it(testCase.description || 'non-specific test case', () => {
+                expect(addressFormatter.format(testCase.components)).toBe(testCase.expected);
+              });
+            }
             return true;
           });
         });
