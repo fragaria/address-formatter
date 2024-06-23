@@ -16,7 +16,7 @@
     "pull-submodules": "git submodule init && git submodule update",
     "prepare-templates": "node management/prepare-templates.js",
     "collect-aliases": "node management/collect-aliases.js",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.mjs"
   },
   "publishConfig": {
     "access": "public"
@@ -51,7 +51,7 @@
     "jest": "^29.0.1",
     "js-yaml": "^4.0.0",
     "rimraf": "^5.0.0",
-    "rollup": "^2.0.0",
+    "rollup": "^4.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "semistandard": "^17.0.0"
   },
