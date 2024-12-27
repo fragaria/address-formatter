@@ -52,6 +52,19 @@ United States of America
 `);
   });
 
+  it('should not panic when abbreviation for a language is not present', () => {
+    expect(addressFormatter.format({
+      country_code: 'CH',
+      house_number: '95',
+      road: 'Jungfraustrasse',
+      town: 'Interlaken',
+      country: 'Switzerland'
+    }, { abbreviate: true })).toBe(`Jungfraustrasse 95
+Interlaken
+Switzerland
+`);
+  });
+
   it('should abbreviate CA avenue', () => {
     expect(addressFormatter.format({
       city: 'Vancouver',
