@@ -214,15 +214,13 @@ export const cleanupInput = (input, replacements = [], options = {}) => {
   if (options.abbreviate && input.country_code && country2lang[input.country_code]) {
     for (let i = 0; i < country2lang[input.country_code].length; i++) {
       const lang = country2lang[input.country_code][i];
-      if (abbreviations[lang]) {
-        for (let j = 0; j < abbreviations[lang].length; j++) {
-          if (input[abbreviations[lang][j].component]) {
-            for (let k = 0; k < abbreviations[lang][j].replacements.length; k++) {
-              input[abbreviations[lang][j].component] = input[abbreviations[lang][j].component].replace(
-                new RegExp(`(^|\\s)${abbreviations[lang][j].replacements[k].src}\\b`),
+      for (let j = 0; j < abbreviations[lang].length; j++) {
+        if (input[abbreviations[lang][j].component]) {
+          for (let k = 0; k < abbreviations[lang][j].replacements.length; k++) {
+            input[abbreviations[lang][j].component] = input[abbreviations[lang][j].component].replace(
+              new RegExp(`(^|\\s)${abbreviations[lang][j].replacements[k].src}\\b`),
                 `$1${abbreviations[lang][j].replacements[k].dest}`
-              );
-            }
+            );
           }
         }
       }
