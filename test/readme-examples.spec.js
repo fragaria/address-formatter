@@ -63,7 +63,8 @@ United States of America
 
     expect(format).toBe(
 `301 Hamilton Ave
-Palo Alto 94303
+Palo Alto
+94303
 USA
 `
     );
@@ -86,7 +87,8 @@ USA
     });
     expect(format).toBe(
 `301 Hamilton Ave
-Palo Alto 94303
+Palo Alto
+94303
 USA
 `
     );

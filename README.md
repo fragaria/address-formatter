@@ -84,7 +84,8 @@ const abbreviatedUkFormat = addressFormatter.format({
 });
 /*
 301 Hamilton Ave
-Palo Alto 94303
+Palo Alto
+94303
 USA
 */
 
@@ -105,7 +106,8 @@ const fallbackCountryCode = addressFormatter.format({
 });
 /*
 301 Hamilton Ave
-Palo Alto 94303
+Palo Alto
+94303
 USA
 */
 
