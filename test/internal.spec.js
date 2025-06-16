@@ -295,6 +295,13 @@ describe('address-formatter', () => {
       }, [], { abbreviate: true });
       expect(converted).toHaveProperty('platz', 'Bonn');
     });
+
+    it('should not crash for undefined abbreviations', () => {
+      const converted = addressFormatterInternals.cleanupInput({
+        country_code: 'JP'
+      }, [], { abbreviate: true });
+      expect(converted).toHaveProperty('country_code', 'JP');
+    });
   });
 
   describe('findTemplate', () => {
