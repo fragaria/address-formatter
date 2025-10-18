@@ -137,12 +137,17 @@ export const getCountyCode = (county, countryCode) => {
     if (typeof e.name === 'string' && e.name.toUpperCase() === county.toUpperCase()) {
       return e;
     }
+    if (typeof e.name === 'string') {
+      return false;
+    }
     const variants = Object.values(e.name);
-    const foundVariant = variants.find((e) => e.toUpperCase() === county.toUpperCase());
-    if (foundVariant) {
-      return {
-        key: e.key
-      };
+    for(const v of variants) {
+      const foundVariant = county.match(new RegExp(`${v}`, 'i'));
+      if (foundVariant) {
+        return {
+          key: e.key
+        };
+      }
     }
     return false;
   });
