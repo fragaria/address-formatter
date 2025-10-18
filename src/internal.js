@@ -141,7 +141,7 @@ export const getCountyCode = (county, countryCode) => {
       return false;
     }
     const variants = Object.values(e.name);
-    for(const v of variants) {
+    for (const v of variants) {
       const foundVariant = county.match(new RegExp(`${v}`, 'i'));
       if (foundVariant) {
         return {
