@@ -6,7 +6,7 @@ const SRC_PATH = path.resolve(__dirname, '../address-formatting/conf/'),
   TARGET_PATH = path.resolve(__dirname, '../src/templates/');
 
 if (!fs.existsSync(SRC_PATH)) {
-  console.error('address-formatting data not found. Maybe the submodule is not initalized?')
+  console.error('address-formatting data not found. Maybe the submodule is not initalized?');
   process.exit(1);
 }
 
@@ -43,7 +43,7 @@ function convertAbbreviations(src, dest) {
 
 function convertCountryCodes(src, dest) {
   const contents = fs.readFileSync(path.resolve(SRC_PATH, src), 'utf8');
-  doc = yaml.load(contents.replace(/ \# /g, ' '));
+  let doc = yaml.load(contents.replace(/ \# /g, ' '));
   fs.writeFileSync(path.resolve(TARGET_PATH, dest), JSON.stringify(doc));
 }
 
