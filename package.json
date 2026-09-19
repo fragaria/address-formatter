@@ -66,6 +66,9 @@
   "overrides": {
      "@rollup/plugin-babel": {
        "@babel/core": "$@babel/core"
+     },
+     "@babel/plugin-syntax-dynamic-import": {
+       "@babel/core": "$@babel/core"
      }
   },
   "jest": {
